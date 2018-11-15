@@ -1,0 +1,104 @@
+.article-page{
+  overflow: hidden;
+  .article{
+    max-width: 680px;
+    margin:0 auto;
+  }
+  .title{
+    margin: 45px 0 30px;
+    font-size: 32px;
+  }
+  .article-info{
+    color: #666;
+    font-size: 12px;
+    border-left: 10px solid #0066bb;
+    padding: 8px 15px;
+    background: rgba(245, 245, 245, .5);
+    &>span{
+      margin-right: 25px;
+    }
+  }
+  .tag{
+    display: inline-block;
+    color:#999;
+    margin-right: 10px;
+    padding:2px 8px;
+    border-radius: 8px;
+    border:1px solid #ccc;
+  }
+  .content{
+    margin:30px 0 50px;
+  }
+  .top-info{
+    margin-bottom: 5px;
+  }
+  .username,.time{
+      display: inline-block;
+      margin-right: 30px;
+  }
+  .comment-title{
+    font-size: 16px;
+    font-weight: bold;
+    padding: 10px 0;
+    border-bottom:1px solid #ccc;
+    margin-bottom: 20px;
+    position: relative;
+  }
+  .add-comment{
+    position: absolute;
+    font-size: 12px;
+    right: 10px;
+    bottom: 10px;
+    color: #666;
+    cursor: pointer;
+  }
+  .comment-item{
+    margin-bottom:50px;
+    padding: 10px 20px;
+    border-left: 10px solid #0066bb;
+  }
+  .comment-user{
+    font-size: 16px;
+    font-weight: bold;
+  }
+  .comment-time{
+    font-size: 12px;
+    margin-bottom: 10px;
+    color:#666;
+  }
+  .comment-input-warp{
+    padding:0 10px 0;
+    overflow: hidden;
+    transition: all .3s ease;
+    .comment-input{
+      display: block;
+      padding: 8px;
+      resize: none;
+      width: 100%;
+      box-sizing: border-box;
+      border-radius: 5px;
+      border-color: #ccc;
+      outline: none;
+      &:focus{
+        border-color: #99CCFF;
+        box-shadow: 0 0 1px #0099CC;
+      }
+    }
+    .submit-comment{
+      margin:10px 5px;
+      padding:6px 12px;
+      background:#0099CC;
+      color:#fff;
+      border-radius: 8px;
+      float: right;
+      cursor: pointer;
+    }
+    .cancel{
+      margin:10px 5px;
+      padding:6px 12px;
+      color:#666;
+      float: right;
+      cursor: pointer;
+    }
+  }
+}

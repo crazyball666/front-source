@@ -1,0 +1,16 @@
+*{
+  padding:0;
+  margin:0;
+}
+html,body{
+  font-size: 14px;
+}
+input, button, select, textarea {
+outline: none;
+-webkit-appearance: none;
+-moz-appearance: none;
+-o-appearance: none;
+appearance: none;
+border-radius: 0;
+border:none;
+}

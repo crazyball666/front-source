@@ -1,0 +1,21 @@
+.about-page{
+  .bg{
+    height: 400px;
+    background-position: center center;
+    background-size: cover;
+    overflow: hidden;
+  }
+  .words{
+    text-align: center;
+    padding-top:130px;
+    color:#fff;
+    h1{
+      font-size: 50px;
+      letter-spacing: 5px;
+    }
+    p{
+      font-size: 18px;
+      // font-weight: bold;
+    }
+  }
+}

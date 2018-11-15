@@ -1,0 +1,33 @@
+.archive-page{
+  overflow: hidden;
+  .article-list{
+    max-width:650px;
+    margin:0 auto;
+    padding:50px 0;
+  }
+  .article-group{
+    margin-bottom: 40px;
+    padding-bottom: 40px;
+    &:not(:last-child){
+      border-bottom: 1px solid #ccc;
+    }
+  }
+  .group-title{
+    font-size: 20px;
+    font-weight: bold;
+    color: #006699;
+  }
+  .article-item{
+    padding:5px 0;
+    .iconfont{
+      margin:0 5px;
+    }
+    .article-title{
+      cursor: pointer;
+      &:hover{
+        color:#3399bb;
+        text-decoration: underline;
+      }
+    }
+  }
+}

@@ -1,0 +1,112 @@
+.login-page {
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+  .login-box {
+    height: 300px;
+    width: 500px;
+    border: 2px solid #ccc;
+    border-radius: 30px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    animation: slide-in 1s ease;
+    background: #fff;
+    padding: 30px;
+    animation: fade-in 1s ease;
+  }
+  h2 {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 30px;
+    letter-spacing: 3px;
+    word-spacing: 5px;
+    background: linear-gradient(to right, #33cc33, #0099cc);
+    -webkit-background-clip: text;
+    color: transparent;
+  }
+  #bg {
+    height: 100%;
+    width: 100%;
+    animation: fade-in .5s ease;
+  }
+  .input-warp {
+    width: 90%;
+    margin: 0 auto 40px;
+    border-bottom: 1px solid #ccc;
+    padding: 10px;
+    // height: 42px;
+    position: relative;
+    transition: all 0.5s ease;
+    &::after {
+      content: '';
+      display: block;
+      height: 1px;
+      width: 0px;
+      position: absolute;
+      top: 100%;
+      left: 0px;
+      right: 0px;
+      margin: 0 auto;
+      background: #0099cc;
+      transition: all 0.5s ease;
+    }
+  }
+  .input-title {
+    display: inline-block;
+    font-size: 16px;
+    padding: 10px;
+    color: #999;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transition: all 0.5s ease;
+  }
+  .input-box {
+    width: 100%;
+  }
+  .focus {
+    &::after {
+      width: 100%;
+    }
+    .input-title {
+      transform: translate3d(0,-60%,0);
+      color: #0099cc;
+    }
+  }
+  .login-btn {
+    position: absolute;
+    right: 10%;
+    bottom: 25px;
+    border: 1px solid #0099cc;
+    width: 100px;
+    height: 35px;
+    text-align: center;
+    cursor: pointer;
+    .btn-content {
+      line-height: 35px;
+      display: inline-block;
+      position: absolute;
+      top: 0;
+      left: 20px;
+      right: 20px;
+      bottom: -1px;
+      margin: auto;
+      text-align: center;
+      transition: all 0.2s ease;
+    }
+    &:hover .btn-content {
+      background: #0099cc;
+      color: #fff;
+      left: 0;
+      right: -1px;
+    }
+  }
+}
+@keyframes fade-in{
+  0%{transform: translate3d(0,100px,0);opacity: 0;}
+  100%{transform: translate3d(0,0,0);opacity: 1;}
+}

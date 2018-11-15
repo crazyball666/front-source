@@ -1,0 +1,43 @@
+.main{
+  height: 100vh;
+  .sider{}
+  .container{
+    .header{
+      position: relative;
+      .user-box{
+        position: absolute;
+        width: 120px;
+        text-align: center;
+        height: 100%;
+        right: 50px;
+        .username{
+          color: #fff;
+          margin-left: 10px;
+        }
+      }
+      .slider-box{
+        position: absolute;
+        width: 120px;
+        top:100%;
+        right: 50px;
+        background: #eee;
+        z-index: 9;
+        overflow: hidden;
+        max-height: 0;
+        transition: all .3s linear;
+        &.show{
+          max-height: 300px; // 必须大于元素实际高度
+        }
+      }
+    }
+    .content-warp{
+      background: #fff;
+      display: flex;
+      flex-direction: column;
+    }
+    .content{
+      flex:1;
+    }
+    .footer{}
+  }
+}

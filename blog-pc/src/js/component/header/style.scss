@@ -1,0 +1,30 @@
+.header{
+  height: 50px;
+  position: relative;
+  border-bottom:2px solid #eee;
+  .words{
+    height: 100%;
+    line-height: 50px;
+    padding-left: 30px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  .nav{
+    position: absolute;
+    height: 100%;
+    top:0;
+    right: 15px;
+  }
+  .nav-item{
+    display: inline-block;
+    height: 100%;
+    line-height: 50px;
+    padding: 0 15px;
+    cursor: pointer;
+    font-weight: bold;
+    &:hover{
+      color:#336699;
+    }
+  }
+}

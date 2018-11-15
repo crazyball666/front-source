@@ -1,0 +1,14 @@
+.ArticleList{
+  padding: 20px 30px;
+  .top{
+    margin-bottom:20px;
+    .search{
+      width: 300px;
+      float: right;
+      &::after{
+        content:'';
+        clear: both;
+      }
+    }
+  }
+}
