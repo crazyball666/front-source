@@ -1,5 +1,5 @@
 // 主函数
-function int(canvasEle, num) {
+function init(canvasEle, num) {
   class Circle {
     constructor(x, y, r) {
       this.x = x; //圈圈坐标x
@@ -7,8 +7,8 @@ function int(canvasEle, num) {
       this.r = r || 3; //圈圈半径r
       this.mx = Math.random() * 2 - 1; //圈圈移动速度x
       this.my = Math.random() * 2 - 1; //圈圈移动速度y
-      this.lineColor = `#eee`;
-      this.color = `#eee`;
+      this.lineColor = `#ddd`;
+      this.color = `#ddd`;
     }
     //画圈圈方法
     draw() {
@@ -73,7 +73,7 @@ function int(canvasEle, num) {
     return requestAnimationFrame(drawcanvas);
   }
 
-  var canvas = document.getElementById('bg');
+  var canvas = document.getElementById(canvasEle);
   console.log(canvas);
   var ctx = canvas.getContext('2d');
   var circles = [];
@@ -93,4 +93,4 @@ function int(canvasEle, num) {
   return drawcanvas();
 }
 
-export default int;
+export default init;
