@@ -1,11 +1,12 @@
-import '../scss/app.scss';
-import Vue from 'vue';
-import router from './router/index';
-import App from './component/App.vue';
+import "../scss/app.scss";
+import Vue from "vue";
+import router from "./router/index";
+import App from "./component/App.vue";
 //
+alert(111);
 Vue.use(router);
 new Vue({
-    router,
-    template: '<App/>',
-    components: { App }
-}).$mount('#app')
+  router,
+  template: "<App/>",
+  components: { App }
+}).$mount("#app");
