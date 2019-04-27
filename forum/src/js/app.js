@@ -6,7 +6,7 @@ import App from "./component/App.vue";
 // alert(111);
 Vue.use(router);
 new Vue({
-  router,
+  // router,
+  el: '#app',
   template: "<App/>",
-  components: { App }
-}).$mount("#app");
+});
