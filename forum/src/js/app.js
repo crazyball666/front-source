@@ -3,10 +3,10 @@ import Vue from "vue";
 import router from "./router/index";
 import App from "./component/App.vue";
 //
-alert(111);
+// alert(111);
 Vue.use(router);
 new Vue({
-  router
-  // template: "<App/>",
-  // components: { App }
+  router,
+  template: "<App/>",
+  components: { App }
 }).$mount("#app");
