@@ -4,9 +4,12 @@ import router from "./router/index";
 import App from "./component/App.vue";
 //
 // alert(111);
-Vue.use(router);
+// Vue.use(router);
 new Vue({
   // router,
   el: '#app',
-  template: "<App/>",
+  data: {
+    message: 'Hello Vue!'
+  }
+  // template: "<App/>",
 });
