@@ -1,6 +1,6 @@
 <template>
   <div class="header-bar">
-    <div></div>
+    <div class="login-resign-btn">登录/注册</div>
   </div>
 </template>
 
@@ -16,5 +16,11 @@ export default {};
   right: 0;
   height: 50px;
   background: blue;
+}
+.login-resign-btn {
+  position: absolute;
+  right: 50px;
+  height: 30px;
+  top: 10px;
 }
 </style>
