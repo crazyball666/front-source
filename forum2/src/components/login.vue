@@ -59,12 +59,15 @@ export default {
     },
     async login() {
       try {
-        console.log(111);
         let res = await api.login(this.account, this.password);
         if (res.data.code != 200) {
           alert(res.data.message);
         } else {
           alert("登录成功");
+          this.$store.commit("login", {
+            id: res.data.data.id,
+            name: res.data.data.name
+          });
           window.localStorage.setItem("access_token", res.data.data.token);
           this.close();
         }

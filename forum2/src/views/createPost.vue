@@ -31,6 +31,14 @@ export default {
       content: ""
     };
   },
+  beforeRouteEnter(to, from, next) {
+    next(vm => {
+      if (!vm.$store.state.userId) {
+        // alert("请登录");
+        vm.$router.push({ path: "/" });
+      }
+    });
+  },
   async mounted() {
     let editor = new E("#editor-tool", "#editor");
     // 将图片大小限制为 2M
@@ -75,6 +83,7 @@ export default {
           alert("发帖失败" + res.data.message);
         } else {
           alert("发帖成功！");
+          this.$router.push({ path: "/" });
         }
       } catch (err) {
         alert(err);

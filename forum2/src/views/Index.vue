@@ -59,6 +59,10 @@ export default {
       }
     },
     createPost() {
+      if (!this.$store.state.userId) {
+        alert("请登录");
+        return;
+      }
       this.$router.push({ path: "/post" });
     },
     read(id) {
