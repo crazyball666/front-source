@@ -55,7 +55,7 @@ export default {
       formData.append("file", files[0]);
       api.upload(formData).then(res => {
         // 上传代码返回结果之后，将图片插入到编辑器中
-        insert(res.data);
+        insert(res.data.data[0]);
       });
     };
     // 上传错误提示
