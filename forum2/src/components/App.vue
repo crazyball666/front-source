@@ -31,7 +31,7 @@ export default {
   min-height: 300px;
   width: 920px;
   margin: 80px auto 20px;
-  background: red;
+  background: #fff;
 }
 
 .changepage-enter-active {

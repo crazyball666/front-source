@@ -2,8 +2,13 @@
   <div class="topic-tab">
     <div class="header">主题分类</div>
     <div class="topic-list">
-      <div class="topic-item">热门推荐</div>
-      <div v-for="topic in topicList" :key="topic.id" class="topic-item">{{topic.title}}</div>
+      <div class="topic-item" @click="select({id:0,title:'热门推荐'})">热门推荐</div>
+      <div
+        v-for="topic in topicList"
+        :key="topic.id"
+        class="topic-item"
+        @click="select(topic)"
+      >{{topic.title}}</div>
     </div>
   </div>
 </template>
@@ -11,7 +16,12 @@
 <script>
 export default {
   name: "topic-tab",
-  props: ["topicList"]
+  props: ["topicList"],
+  methods: {
+    select(topic) {
+      this.$emit("select", topic);
+    }
+  }
 };
 </script>
 
