@@ -52,6 +52,7 @@ export default {
   .item {
     flex: 1;
     font-size: 16px;
+    cursor: pointer;
   }
 }
 .content {

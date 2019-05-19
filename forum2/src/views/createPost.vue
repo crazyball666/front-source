@@ -55,7 +55,7 @@ export default {
       formData.append("file", files[0]);
       api.upload(formData).then(res => {
         // 上传代码返回结果之后，将图片插入到编辑器中
-        insert(res.data.data[0]);
+        insert(res.data[0]);
       });
     };
     // 上传错误提示
@@ -67,26 +67,29 @@ export default {
     // 初始化编辑器内容
     editor.txt.html(this.content);
 
-    try {
-      let topicList = await api.getTopicList();
-      this.topicList = topicList.data.data.rows;
-    } catch (err) {
-      alert(err);
-    }
+    api
+      .getTopicList()
+      .then(res => {
+        this.topicList = res.data.rows;
+      })
+      .catch(err => {
+        this.$message({
+          message: "获取主题列表失败",
+          type: "error",
+          center: true
+        });
+      });
   },
   methods: {
     async submit() {
-      try {
-        let res = await api.createPost(this.topic, this.title, this.content);
-        if (res.data.code != 200) {
-          alert("发帖失败" + res.data.message);
-        } else {
-          alert("发帖成功！");
-          this.$router.push({ path: "/" });
-        }
-      } catch (err) {
-        alert(err);
-      }
+      api.createPost(this.topic, this.title, this.content).then(res => {
+        this.$message({
+          message: "获取主题列表失败",
+          type: "error",
+          center: true
+        });
+        this.$router.push({ path: "/" });
+      });
     }
   }
 };

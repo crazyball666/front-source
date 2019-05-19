@@ -4,6 +4,23 @@
     <div class="line"></div>
     <div class="info-list">
       <div class="info-item">
+        <span class="info-title">头像：</span>
+        <div class="upload-box">
+          <el-upload
+            class="avatar-uploader"
+            action="//39.108.174.110/api/v1/upload"
+            :show-file-list="false"
+            :on-success="handleAvatarSuccess"
+            :before-upload="beforeAvatarUpload"
+            accept="image/jpeg, image/png"
+            :on-error="handleError"
+          >
+            <img v-if="avator" :src="avator" class="avatar">
+            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+          </el-upload>
+        </div>
+      </div>
+      <div class="info-item">
         <span class="info-title">帐号：</span>
         <input type="text" class="info-input" v-model="account">
       </div>
@@ -22,13 +39,13 @@
       <div class="info-item">
         <span class="info-title">性别：</span>
         <select class="info-input" v-model="sex">
-          <option value="0">男</option>
-          <option value="1">女</option>
-          <option value="2">保密</option>
+          <option value="1">男</option>
+          <option value="2">女</option>
+          <option value="0">保密</option>
         </select>
       </div>
     </div>
-    <div class="register-btn" @click="register">注册</div>
+    <el-button type="primary" class="register-btn" @click="register" :loading="loading">注册</el-button>
   </div>
 </template>
 
@@ -41,27 +58,54 @@ export default {
       name: "",
       password: "",
       confirmPassword: "",
-      sex: "2"
+      sex: "0",
+      avator: "",
+      loading: false
     };
   },
   methods: {
     async register() {
-      try {
-        let res = await api.register(
+      this.loading = true;
+      let res = await api
+        .register(
           this.account,
           this.password,
           this.confirmPassword,
           this.name,
-          this.sex
-        );
-        if (res.data.code != 200) {
-          alert(res.data.message);
-        } else {
-          alert("注册成功");
-        }
-      } catch (err) {
-        alert(err);
+          this.sex,
+          this.avator
+        )
+        .then(res => {
+          if (res.code == 200) {
+            this.$message({
+              message: "注册成功",
+              type: "success",
+              center: true
+            });
+            this.loading = false;
+            this.$router.push({ path: "/" });
+          }
+        })
+        .catch(err => {
+          this.loading = false;
+        });
+    },
+    handleError(err) {
+      this.$message.error("上传头像失败!");
+    },
+    handleAvatarSuccess(res, file) {
+      this.avator = res.data[0];
+    },
+    beforeAvatarUpload(file) {
+      const isJPG = file.type === "image/jpeg" || file.type === "image/png";
+      const isLt2M = file.size / 1024 / 1024 < 2;
+      if (!isJPG) {
+        this.$message.error("上传头像图片只能是 JPG或者PNG 格式!");
       }
+      if (!isLt2M) {
+        this.$message.error("上传头像图片大小不能超过 2MB!");
+      }
+      return isJPG && isLt2M;
     }
   }
 };
@@ -94,6 +138,33 @@ export default {
   display: flex;
   margin: 25px 0;
 }
+.upload-box {
+  flex: 1;
+  .avatar-uploader {
+    width: 120px;
+    height: 120px;
+    border: 1px dashed #d9d9d9;
+    border-radius: 6px;
+    cursor: pointer;
+    overflow: hidden;
+  }
+  .avatar-uploader:hover {
+    border-color: #409eff;
+  }
+  .avatar-uploader-icon {
+    font-size: 28px;
+    color: #8c939d;
+    width: 120px;
+    height: 120px;
+    line-height: 120px;
+    text-align: center;
+  }
+  .avatar {
+    width: 120px;
+    height: 120px;
+    display: block;
+  }
+}
 .info-title {
   font-size: 16px;
   width: 80px;
@@ -112,6 +183,7 @@ export default {
   }
 }
 .register-btn {
+  display: block;
   margin: 50px auto 10px;
   text-align: center;
   padding: 10px 0;

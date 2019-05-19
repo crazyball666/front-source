@@ -2,7 +2,7 @@
   <transition name="changepage" mode="out-in">
     <div class="login-warp" v-if="show">
       <div class="login-box">
-        <span class="close-btn" @click="close">关闭</span>
+        <i class="close-btn el-icon-close" @click="close"></i>
         <h2 class="title">论坛登录</h2>
         <div class="account-box">
           <span class="account-title">帐号：</span>
@@ -58,22 +58,17 @@ export default {
       this.$emit("closeEvent", false);
     },
     async login() {
-      try {
-        let res = await api.login(this.account, this.password);
-        if (res.data.code != 200) {
-          alert(res.data.message);
-        } else {
-          alert("登录成功");
-          this.$store.commit("login", {
-            id: res.data.data.id,
-            name: res.data.data.name
-          });
-          window.localStorage.setItem("access_token", res.data.data.token);
-          this.close();
-        }
-      } catch (err) {
-        alert(err);
-      }
+      api.login(this.account, this.password).then(res => {
+        this.$store.commit("login", {
+          id: res.data.id,
+          name: res.data.name
+        });
+        window.localStorage.setItem("access_token", res.data.token);
+        window.localStorage.setItem("user_id", res.data.id);
+        window.localStorage.setItem("user_name", res.data.name);
+        this.$message({ message: "登录成功", type: "success", center: true });
+        this.close();
+      });
     },
     goRegister() {
       this.close();
@@ -93,13 +88,16 @@ export default {
   z-index: 999;
   background: rgba(30, 30, 30, 0.7);
   .close-btn {
-    width: 30px;
-    height: 30px;
+    font-size: 16px;
+    font-weight: bold;
     display: block;
     position: absolute;
-    top: 10px;
-    right: 10px;
-    background: red;
+    top: 8px;
+    right: 8px;
+    color: #fff;
+    border-radius: 50%;
+    background: #aaa;
+    padding: 3px;
   }
   .login-box {
     position: absolute;
@@ -182,10 +180,32 @@ export default {
   }
 }
 .changepage-enter-active {
-  animation: showpage 0.5s ease;
+  animation: showpage 0.4s ease;
+  .login-box {
+    animation: slideUp 0.4s ease;
+  }
 }
 .changepage-leave-active {
-  animation: hidepage 0.5s ease;
+  animation: hidepage 0.4s ease;
+  .login-box {
+    animation: slideDown 0.4s ease;
+  }
+}
+@keyframes slideUp {
+  0% {
+    transform: translate(-250px, 0) scaleX(0.5);
+  }
+  100% {
+    transform: translate(-250px, -150px) scaleX(1);
+  }
+}
+@keyframes slideDown {
+  0% {
+    transform: translate(-250px, -150px) scaleX(1);
+  }
+  100% {
+    transform: translate(-250px, 0) scaleX(0.2);
+  }
 }
 @keyframes showpage {
   0% {
