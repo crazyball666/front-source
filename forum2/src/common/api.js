@@ -3,7 +3,7 @@
 import ajax from './ajax';
 const remote = '//39.108.174.110/api/v1';
 const local = '//localhost:8001/api/v1';
-const host = local;
+const host = remote;
 export default {
   async getTopicList() {
     return await ajax.get(host + "/topic");
