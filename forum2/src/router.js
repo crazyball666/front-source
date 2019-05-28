@@ -9,6 +9,8 @@ import userFans from './views/userFans'
 import userCollection from './views/userCollection'
 import createPost from './views/createPost'
 import postDetail from './views/postDetail'
+import userPost from './views/userPost'
+import editPost from './views/editPost'
 
 Vue.use(Router)
 
@@ -35,6 +37,10 @@ export default new Router({
           component: userInfo
         },
         {
+          path: 'post',
+          component: userPost
+        },
+        {
           path: 'follow',
           component: userFollow
         },
@@ -57,6 +63,12 @@ export default new Router({
       path: '/post/:id',
       name: 'postDetail',
       component: postDetail,
+      props: true,
+    },
+    {
+      path: '/post/:id/edit',
+      name: 'editPost',
+      component: editPost,
       props: true,
     }
   ]

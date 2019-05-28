@@ -15,7 +15,7 @@
       <div id="editor-tool"></div>
       <div id="editor"></div>
     </div>
-    <div class="submit-btn" @click="submit">发布</div>
+    <div class="submit-btn" @click="submit">保存</div>
   </div>
 </template>
 
@@ -23,6 +23,7 @@
 import E from "wangeditor";
 import api from "../common/api";
 export default {
+  props: ["id"],
   data() {
     return {
       topicList: [],
@@ -34,7 +35,6 @@ export default {
   beforeRouteEnter(to, from, next) {
     next(vm => {
       if (!vm.$store.state.userId) {
-        // alert("请登录");
         vm.$router.push({ path: "/" });
       }
     });
@@ -79,17 +79,25 @@ export default {
           center: true
         });
       });
+    api.postDetail(this.id).then(res => {
+      this.title = res.data.title;
+      this.topic = res.data.topic_id;
+      this.content = res.data.content;
+      editor.txt.html(this.content);
+    });
   },
   methods: {
     async submit() {
-      api.createPost(this.topic, this.title, this.content).then(res => {
-        this.$message({
-          message: "发帖成功",
-          type: "success",
-          center: true
+      api
+        .updatePost(this.id, this.topic, this.title, this.content)
+        .then(res => {
+          this.$message({
+            message: "修改成功",
+            type: "success",
+            center: true
+          });
+          this.$router.push({ path: `/post/${this.id}` });
         });
-        this.$router.push({ path: "/" });
-      });
     }
   }
 };

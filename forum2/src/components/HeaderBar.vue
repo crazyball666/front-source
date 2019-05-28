@@ -1,5 +1,8 @@
 <template>
   <div class="header-bar">
+    <div class="index-btn" @click="goIndex">
+      <i class="el-icon-menu"></i>
+    </div>
     <div
       class="login-resign-btn"
       v-if="userId"
@@ -52,6 +55,9 @@ export default {
       window.localStorage.removeItem("user_name");
       window.localStorage.removeItem("access_token");
       this.$router.push({ path: `/` });
+    },
+    goIndex() {
+      this.$router.push({ path: `/` });
     }
   }
 };
@@ -66,6 +72,20 @@ export default {
   height: 50px;
   background: #333;
   z-index: 999;
+}
+.index-btn {
+  height: 100%;
+  line-height: 50px;
+  font-size: 20px;
+  color: #fff;
+  margin-left: 30px;
+  cursor: pointer;
+  width: 50px;
+  text-align: center;
+  transition: all 0.5s ease;
+  &:hover {
+    background: #555;
+  }
 }
 .option {
   position: absolute;

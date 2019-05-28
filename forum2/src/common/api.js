@@ -3,13 +3,15 @@
 import ajax from './ajax';
 const remote = '//39.108.174.110/api/v1';
 const local = '//localhost:8001/api/v1';
-const host = remote;
+const host = local;
 export default {
   async getTopicList() {
     return await ajax.get(host + "/topic");
   },
-  async getPostList(topicId = 0) {
-    return await ajax.get(host + `/post?topicId=${topicId}`);
+  async getPostList(topicId = 0, userId) {
+    let url = `/post?topicId=${topicId}`;
+    userId && (url += `&userId=${userId}`);
+    return await ajax.get(host + url);
   },
   async login(account, password) {
     return await ajax.post(host + '/login', { account, password });
@@ -43,5 +45,11 @@ export default {
   },
   async unfollow(userId) {
     return await ajax.get(host + `/unfollow?userId=${userId}`);
+  },
+  async deletePost(postId) {
+    return await ajax.delete(host + `/post/${postId}`);
+  },
+  async updatePost(postId, topicId, title, content) {
+    return await ajax.put(host + `/post/${postId}`, { topicId, title, content });
   }
 }

@@ -225,7 +225,7 @@ export default {
   }
   .comment-user-avator {
     height: 50px;
-    widows: 50px;
+    width: 50px;
     border-radius: 50%;
     display: block;
     margin: 5px auto;

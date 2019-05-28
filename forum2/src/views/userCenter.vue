@@ -2,12 +2,13 @@
   <div class="user-center">
     <div class="title">个人中心</div>
     <div class="line"></div>
-    <div class="tab-list">
-      <div class="item" @click="detail('info')">个人信息</div>
-      <div class="item" @click="detail('follow')">我的关注</div>
-      <div class="item" @click="detail('fans')">我的粉丝</div>
-      <div class="item" @click="detail('collection')">我的收藏</div>
-    </div>
+    <el-tabs v-model="activeName" @tab-click="handleClick" class="tab-list">
+      <el-tab-pane label="个人信息" name="info"></el-tab-pane>
+      <el-tab-pane label="我的帖子" name="post"></el-tab-pane>
+      <el-tab-pane label="我的关注" name="follow"></el-tab-pane>
+      <el-tab-pane label="我的粉丝" name="fans"></el-tab-pane>
+      <el-tab-pane label="我的收藏" name="collection"></el-tab-pane>
+    </el-tabs>
     <router-view class="content"/>
   </div>
 </template>
@@ -16,11 +17,16 @@
 export default {
   props: ["id"],
   data() {
-    return {};
+    return {
+      activeName: "info"
+    };
   },
   methods: {
     detail(path) {
       this.$router.push({ path: `/user/${this.id}/${path}` });
+    },
+    handleClick() {
+      this.$router.push({ path: `/user/${this.id}/${this.activeName}` });
     }
   }
 };
@@ -46,14 +52,7 @@ export default {
   margin-bottom: 30px;
 }
 .tab-list {
-  display: flex;
-  width: 400px;
   padding: 0 30px;
-  .item {
-    flex: 1;
-    font-size: 16px;
-    cursor: pointer;
-  }
 }
 .content {
   padding: 30px;
