@@ -1,4 +1,5 @@
 {
   "PROJECT_NAME": "user-module",
-  "HTML_PATH": "C:/Users/Administrator/Desktop/Go/src/user-module/view/resource.html"
+  "HTML_PATH": "C:/Users/Administrator/Desktop/Go/src/user-module/view/resource.html",
+  "OUTPUT_PATH": "C:/Users/Administrator/Desktop/project/front-source/static"
 }
