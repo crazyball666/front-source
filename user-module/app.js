@@ -49,22 +49,22 @@ $(function name() {
     $.ajax({
       contentType: 'application/json',
       type: 'POST',
-      url: "/login",
+      url: `/login${window.location.search}`,
       dataType: "json",
       data,
       success: function (data) {
         loading = false
         if (data.code == 200) {
-          let redirectURL = GetQueryString("redirectURL")
-          if (!redirectURL) return alert("no redirect url")
-          location.href = `//${redirectURL}?sessionToken=${data.data.sessionToken}`
+          let redirectURL = data.data.redirectURL;
+          if (!redirectURL) return alert("no redirect url");
+          location.href = redirectURL;
         } else {
           alert(data.message)
         }
       },
       error: function (err) {
         loading = false;
-        alert(err)
+        alert("error")
       }
     })
   })
