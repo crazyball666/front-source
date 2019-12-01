@@ -1,0 +1,15 @@
+{
+  "name": "admin",
+  "version": "1.0.0",
+  "description": "admin front source",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "crazyball",
+  "license": "ISC",
+  "dependencies": {
+    "element-ui": "^2.13.0",
+    "vue": "^2.6.10"
+  }
+}
