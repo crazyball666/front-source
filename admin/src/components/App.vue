@@ -6,8 +6,7 @@
         <el-menu
           default-active="1-1"
           class="mune"
-          @open="handleOpen"
-          @close="handleClose"
+          @select="handleSelect"
           background-color="#666"
           text-color="#fff"
           active-text-color="#ffd04b"
@@ -32,7 +31,9 @@
           </el-submenu>
         </el-menu>
       </div>
-      <div class="content"></div>
+      <div class="content-box">
+        <router-view />
+      </div>
     </div>
   </div>
 </template>
@@ -44,11 +45,12 @@ export default {
     return {};
   },
   methods: {
-    handleOpen(key, keyPath) {
-      console.log(key, keyPath);
-    },
-    handleClose(key, keyPath) {
-      console.log(key, keyPath);
+    handleSelect(key, keyPath) {
+      if (key == '1-1') {
+        this.$router.push('article-list');
+      } else if (key == '1-2') {
+        // this.$router.push("")
+      }
     },
   },
 };
@@ -75,9 +77,11 @@ export default {
   height: 100%;
   background: #666;
 }
-.content {
-  background: red;
+.content-box {
   height: 100%;
   flex: 1;
+  padding: 30px 50px 0;
+  box-sizing: border-box;
+  overflow-y: auto;
 }
 </style>
