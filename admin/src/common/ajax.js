@@ -21,8 +21,8 @@ axios.interceptors.response.use((response) => {
     throw err;
   }
   return data;
-}, (err) => { // 这里是返回状态码不为200时候的错误处理
-  let errMsg = '';
+}, err => { // 这里是返回状态码不为200时候的错误处理
+  let errMsg = err;
   let code;
   if (err && err.response) {
     switch (err.response.status) {
@@ -63,7 +63,7 @@ axios.interceptors.response.use((response) => {
         errMsg = '未知错误'
     }
   }
-  code = (err && err.response && err.response.data && err.response.data.code) || err.response.status || 500;
+  code = (err && err.response && err.response.status) || 500;
   errMsg = (err && err.response && err.response.data && err.response.data.message) || errMsg || '未知错误';
   if (code == 401) {
     Message({

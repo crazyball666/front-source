@@ -14,8 +14,8 @@
           <el-submenu index="1">
             <span slot="title">Blog系统</span>
             <el-menu-item index="1-1">文章管理</el-menu-item>
-            <el-menu-item index="1-2">评论管理</el-menu-item>
-            <el-menu-item index="1-3">系统管理</el-menu-item>
+            <el-menu-item index="1-2">标签管理</el-menu-item>
+            <el-menu-item index="1-3">评论管理</el-menu-item>
           </el-submenu>
           <el-submenu index="2">
             <span slot="title">系统</span>
@@ -40,19 +40,19 @@
 
 <script>
 export default {
-  name: 'App',
+  name: "App",
   data() {
     return {};
   },
   methods: {
     handleSelect(key, keyPath) {
-      if (key == '1-1') {
-        this.$router.push('article-list');
-      } else if (key == '1-2') {
-        // this.$router.push("")
+      if (key == "1-1") {
+        this.$router.push("/article-list");
+      } else if (key == "1-2") {
+        this.$router.push("/tag-list");
       }
-    },
-  },
+    }
+  }
 };
 </script>
 

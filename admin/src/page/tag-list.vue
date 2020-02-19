@@ -1,38 +1,21 @@
 <template>
-  <div class="article-list">
-    <h1 class="title">文章列表</h1>
+  <div class="tag-list">
+    <h1 class="title">标签列表</h1>
     <el-row type="flex" class="add-btn-row" justify="end">
-      <el-button type="primary" @click="handleAddArticle">新增文章</el-button>
+      <el-button type="primary" @click="handleAddTag">新增标签</el-button>
     </el-row>
-    <el-table :data="articleList" empty-text="暂无数据" border v-loading="loading">
+    <el-table :data="tagList" empty-text="暂无数据" border v-loading="loading">
       <el-table-column
         prop="p_id"
         label="ID"
         align="center"
         class-name="column-content"
-        width="120"
+        width="150"
       ></el-table-column>
-      <el-table-column prop="title" label="标题" align="center" class-name="column-content"></el-table-column>
-      <el-table-column prop="tags" label="标签" align="center" class-name="column-content"></el-table-column>
-      <!-- <el-table-column prop="name" label="简介" align="center" class-name="column-content"> </el-table-column> -->
-      <el-table-column
-        prop="read_count"
-        label="阅读数"
-        align="center"
-        class-name="column-content"
-        width="80"
-      ></el-table-column>
-      <el-table-column
-        prop="like_count"
-        label="点赞数"
-        align="center"
-        class-name="column-content"
-        width="80"
-      ></el-table-column>
+      <el-table-column prop="content" label="标签" align="center" class-name="column-content"></el-table-column>
       <el-table-column prop="created_at" label="创建时间" align="center" class-name="column-content"></el-table-column>
-      <el-table-column prop label="操作" align="center" class-name="column-content" width="150">
+      <el-table-column prop label="操作" align="center" class-name="column-content" width="120">
         <template slot-scope="scope">
-          <el-button @click="handleEdit(scope.row.p_id)" type="text" size="small">编辑</el-button>
           <el-button
             @click="handleDelete(scope.row.p_id)"
             type="text"
@@ -46,7 +29,7 @@
       class="pagination"
       background
       layout="prev, pager, next"
-      :total="articleCount"
+      :total="tagCount"
       :current-page:="currentPage"
       @current-change="pageDidChange"
     ></el-pagination>
@@ -59,8 +42,8 @@ export default {
   data: () => {
     return {
       loading: false,
-      articleList: [],
-      articleCount: 0,
+      tagList: [],
+      tagCount: 0,
       currentPage: 1
     };
   },
@@ -71,9 +54,9 @@ export default {
   },
   methods: {
     updateList: async function() {
-      let res = await blogApi.getArticleList(this.currentPage - 1, 10);
-      this.articleList = res.data.articles;
-      this.articleCount = res.data.count;
+      let res = await blogApi.getTagList(this.currentPage - 1, 10);
+      this.tagList = res.data.tags;
+      this.tagCount = res.data.count;
     },
     //handle
     pageDidChange: async function(page) {
@@ -81,32 +64,52 @@ export default {
       await this.updateList();
     },
     handleEdit: function(pid) {
-      this.$router.push(`/article-edit/${pid}`);
+      // this.$router.push(`/article-edit/${pid}`);
     },
     handleDelete: function(pid) {
-      this.$confirm("是否删除该文章?", "提示", {
+      this.$confirm("是否删除该标签?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning"
       })
-        .then(() => blogApi.deleteArticle(pid))
-        .then(() => this.updateList())
+        .then(() => blogApi.deleteTag(pid))
         .then(res => {
           this.$message({
             type: "success",
             message: "删除成功!"
           });
+          this.loading = true;
+          return this.updateList();
+        })
+        .then(() => {
+          this.loading = false;
         })
         .catch(() => {});
     },
-    handleAddArticle: function() {
-      this.$router.push("/article-add");
+    handleAddTag: function() {
+      this.$prompt("请输入新标签", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消"
+      })
+        .then(({ value }) => blogApi.createTag({ content: value }))
+        .then(data => {
+          this.$message({
+            type: "success",
+            message: "创建成功"
+          });
+          this.loading = true;
+          return this.updateList();
+        })
+        .then(() => {
+          this.loading = false;
+        })
+        .catch(() => {});
     }
   }
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang='scss' scoped>
 .title {
   font-size: 20px;
   margin-bottom: 20px;
