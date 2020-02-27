@@ -4,8 +4,8 @@ import {
 } from 'element-ui';
 // import router from '../router'
 
-// let token = window.localStorage.getItem("access_token");
-// axios.defaults.headers.common['access_token'] = token;
+let token = window.localStorage.getItem("accessToken");
+axios.defaults.headers.common['access_token'] = token;
 
 axios.interceptors.response.use((response) => {
   const data = response.data;
@@ -71,10 +71,9 @@ axios.interceptors.response.use((response) => {
       center: true,
       type: 'error'
     });
-    // window.localStorage.removeItem('user_id');
-    // window.localStorage.removeItem('user_name');
-    // window.localStorage.removeItem('access_token');
-    // router.push({ path: '/' });
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("userInfo");
+    location.reload();
   } else {
     Message({
       message: `Error${code && `(${code})`} : ${errMsg}`,

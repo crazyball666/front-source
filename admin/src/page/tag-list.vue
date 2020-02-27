@@ -30,7 +30,7 @@
       background
       layout="prev, pager, next"
       :total="tagCount"
-      :current-page:="currentPage"
+      :current-page="currentPage"
       @current-change="pageDidChange"
     ></el-pagination>
   </div>

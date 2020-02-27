@@ -1,3 +1,7 @@
+/**
+ * bolg 系统api
+ */
+
 import ajax from '../common/ajax';
 
 const BLOG_BASE = '//localhost:8002';

@@ -47,7 +47,7 @@
       background
       layout="prev, pager, next"
       :total="articleCount"
-      :current-page:="currentPage"
+      :current-page="currentPage"
       @current-change="pageDidChange"
     ></el-pagination>
   </div>
@@ -81,7 +81,7 @@ export default {
       await this.updateList();
     },
     handleEdit: function(pid) {
-      this.$router.push(`/article-edit/${pid}`);
+      this.$router.push(`/blog/article-edit/${pid}`);
     },
     handleDelete: function(pid) {
       this.$confirm("是否删除该文章?", "提示", {
@@ -100,7 +100,7 @@ export default {
         .catch(() => {});
     },
     handleAddArticle: function() {
-      this.$router.push("/article-add");
+      this.$router.push("/blog/article-add");
     }
   }
 };

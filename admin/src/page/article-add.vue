@@ -40,7 +40,7 @@
         <i v-else class="el-icon-plus avatar-uploader-icon"></i>
       </el-upload>-->
     </div>
-    <mavonEditor v-model="content" />
+    <mavonEditor v-model="content" style="height:80vh;" />
     <el-row type="flex" justify="center" class="submit-box">
       <el-button type="primary" round @click="handleSubmit" :loading="loading">保存</el-button>
     </el-row>
@@ -112,7 +112,7 @@ export default {
           .then(res => {
             this.loading = false;
             Message.success("创建成功");
-            this.$router.push("/article-list");
+            this.$router.push("/blog/article-list");
           })
           .catch(err => {
             this.loading = false;

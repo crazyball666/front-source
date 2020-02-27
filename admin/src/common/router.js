@@ -5,29 +5,47 @@ import articleList from '../page/article-list.vue'
 import articleAdd from '../page/article-add.vue'
 import tagList from '../page/tag-list.vue'
 
+import userList from '../page/user-module/user-list.vue'
+import roleList from '../page/user-module/role-list.vue'
+import powerList from '../page/user-module/power-list.vue'
+
 Vue.use(Router)
 
 export default new Router({
   routes: [{
-      path: '/article-list',
+      path: '/blog/article-list',
       name: 'articleList',
       component: articleList
     },
     {
-      path: '/article-add',
+      path: '/blog/article-add',
       name: 'articleAdd',
       component: articleAdd
     },
     {
-      path: '/article-edit/:pid',
+      path: '/blog/article-edit/:pid',
       name: 'articleEdit',
       component: articleAdd
     },
     {
-      path: '/tag-list',
+      path: '/blog/tag-list',
       name: 'tagList',
       component: tagList,
+    },
+    {
+      path: '/user/user-list',
+      name: 'userList',
+      component: userList,
+    },
+    {
+      path: '/user/role-list',
+      name: 'roleList',
+      component: roleList,
+    },
+    {
+      path: '/user/power-list',
+      name: 'powerList',
+      component: powerList,
     }
-
   ]
 })
