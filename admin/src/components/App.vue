@@ -29,6 +29,10 @@
             <el-menu-item index="2-2">角色管理</el-menu-item>
             <el-menu-item index="2-3">权限管理</el-menu-item>
           </el-submenu>
+          <el-submenu index="3">
+            <span slot="title">Service系统</span>
+            <el-menu-item index="3-1">自动部署</el-menu-item>
+          </el-submenu>
         </el-menu>
       </div>
       <div class="content-box">
@@ -63,6 +67,8 @@ export default {
         this.$router.push("/user/role-list");
       } else if (key == "2-3") {
         this.$router.push("/user/power-list");
+      } else if (key == "3-1") {
+        this.$router.push("/service/depoly-manager");
       }
     },
     logout: async function() {

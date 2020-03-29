@@ -29,18 +29,17 @@
     </div>
     <div class="item-box">
       <span>封面:</span>
-      <!-- <el-upload
-        class="avatar-uploader"
-        action="https://jsonplaceholder.typicode.com/posts/"
-        :show-file-list="false"
-        :on-success="handleAvatarSuccess"
-        :before-upload="beforeAvatarUpload"
-      >
-        <img v-if="imageUrl" :src="imageUrl" class="avatar" />
-        <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-      </el-upload>-->
+      <el-upload class="img-uploader" action :http-request="uploadImg" :show-file-list="false">
+        <div v-if="!picture">
+          <div
+            class="img-uploader-icon"
+          >{{parseInt(loadingStyle.height) > 0 ?loadingStyle.height : "+"}}</div>
+          <div class="upload-progress" :style="loadingStyle"></div>
+        </div>
+        <img v-else :src="picture" alt class="img" />
+      </el-upload>
     </div>
-    <mavonEditor v-model="content" style="height:80vh;" />
+    <mavonEditor v-model="content" style="min-height:80vh;" />
     <el-row type="flex" justify="center" class="submit-box">
       <el-button type="primary" round @click="handleSubmit" :loading="loading">保存</el-button>
     </el-row>
@@ -51,7 +50,7 @@
 import { mavonEditor } from "mavon-editor";
 import "mavon-editor/dist/css/index.css";
 import blogApi from "../api/blog";
-import blog from "../api/blog";
+import fileApi from "../api/file";
 import { Message } from "element-ui";
 export default {
   data() {
@@ -62,13 +61,18 @@ export default {
       title: "",
       tags: [],
       summary: "",
-      content: ""
+      content: "",
+      picture: "",
+      loadingStyle: { height: "0" }
     };
   },
   components: {
     mavonEditor
   },
   async mounted() {
+    // document
+    //   .querySelector(".v-note-edit")
+    //   .addEventListener("paste", this.paste);
     let res = await blogApi.getAllTags();
     this.tagList = res.data;
     if (this.$route.name == "articleEdit") {
@@ -78,6 +82,7 @@ export default {
         this.title = res.data.title;
         this.summary = res.data.summary;
         this.content = res.data.content;
+        this.picture = res.data.picture;
         let articleTags = res.data.tags.split(",");
         this.tagList.forEach(tag => {
           if (articleTags.includes(tag.content)) {
@@ -94,7 +99,8 @@ export default {
         title: this.title,
         tags: this.tags.join(","),
         summary: this.summary,
-        content: this.content
+        content: this.content,
+        picture: this.picture
       };
       if (this.pid) {
         blogApi
@@ -118,7 +124,37 @@ export default {
             this.loading = false;
           });
       }
+    },
+    uploadImg(info) {
+      this.picture = "";
+      fileApi
+        .uploadFiles(info.file, progress => {
+          this.loadingStyle.height = progress + "%";
+        })
+        .then(res => {
+          if (res.code == 200) {
+            Message.success("上传成功");
+            this.picture = "http://" + res.data[0];
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
     }
+    // async paste(event) {
+    //   if (event.clipboardData || event.originalEvent) {
+    //     var clipboardData =
+    //       event.clipboardData || event.originalEvent.clipboardData;
+    //     var items = clipboardData.items;
+    //     for (var i = 0; i < items.length; i++) {
+    //       if (items[i].type.indexOf("image") !== -1) {
+    //         event.preventDefault();
+    //         let blob = items[i].getAsFile();
+    //         alert("tupian");
+    //       }
+    //     }
+    //   }
+    // }
   }
 };
 </script>
@@ -140,17 +176,26 @@ export default {
   .item-input {
     flex: 1;
   }
-  .avatar-uploader .el-upload {
+  .img-uploader {
     border: 1px dashed #d9d9d9;
     border-radius: 6px;
     cursor: pointer;
     position: relative;
     overflow: hidden;
+    &:hover {
+      border-color: #409eff;
+    }
   }
-  .avatar-uploader .el-upload:hover {
-    border-color: #409eff;
+  .upload-progress {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(152, 251, 152, 0.7);
+    transition: height 0.3s linear;
+    z-index: -1;
   }
-  .avatar-uploader-icon {
+  .img-uploader-icon {
     font-size: 28px;
     color: #8c939d;
     width: 178px;
@@ -158,9 +203,10 @@ export default {
     line-height: 178px;
     text-align: center;
   }
-  .avatar {
-    width: 178px;
-    height: 178px;
+  .img {
+    max-width: 80%;
+    max-height: 300px;
+    margin: 0 auto;
     display: block;
   }
 }

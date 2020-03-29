@@ -1,13 +1,18 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
+// Bolg
 import articleList from '../page/article-list.vue'
 import articleAdd from '../page/article-add.vue'
 import tagList from '../page/tag-list.vue'
 
+// User
 import userList from '../page/user-module/user-list.vue'
 import roleList from '../page/user-module/role-list.vue'
 import powerList from '../page/user-module/power-list.vue'
+
+// Service
+import depolyManager from '../page/service/depoly-manager.vue'
 
 Vue.use(Router)
 
@@ -46,6 +51,11 @@ export default new Router({
       path: '/user/power-list',
       name: 'powerList',
       component: powerList,
+    },
+    {
+      path: '/service/depoly-manager',
+      name: 'depolyManager',
+      component: depolyManager,
     }
   ]
 })
