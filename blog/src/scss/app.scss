@@ -1,6 +1,11 @@
+ @import "./markdown.css";
+
  * {
    margin: 0px;
    padding: 0px;
+   font-size: 14px;
+   color: #333;
+   text-decoration: none;
  }
 
  video {
@@ -11,9 +16,6 @@
    min-height: 100%;
    height: auto;
    width: auto;
-   filter: blur(5px);
-   //  -webkit-filter: grayscale(100%);
-   //  filter: grayscale(100%);
    z-index: -99;
  }
 
@@ -22,4 +24,208 @@
    min-height: 100%;
    height: auto;
    width: auto;
+ }
+
+
+ .page-selector {
+   margin: 20px auto;
+   display: flex;
+   justify-content: center;
+
+   .selector-item {
+     font-size: 12px;
+     display: inline-block;
+     padding: 3px 10px;
+     background: #fff;
+     margin: 0 4px;
+     cursor: pointer;
+     border: 1px solid #399;
+     border-radius: 3px;
+   }
+
+   .selected {
+     background: #399;
+     color: #fff;
+   }
+ }
+
+ //头部
+ .header {
+   background: #333;
+   height: 50px;
+   width: 100%;
+   position: fixed;
+   overflow: hidden;
+   left: 0;
+   top: 0;
+   z-index: 99;
+
+   .icon {
+     display: block;
+     background: url(../assert/menu.png);
+     background-size: cover;
+     width: 24px;
+     height: 24px;
+     margin: 13px 20px;
+     cursor: pointer;
+   }
+
+   .nav {
+     position: absolute;
+     display: flex;
+     height: 100%;
+     width: 240px;
+     top: 0;
+     right: 30px;
+   }
+
+   .nav-item {
+     flex: 1;
+     color: white;
+     list-style-type: none;
+     line-height: 50px;
+     text-align: center;
+     transition: background 0.4s ease;
+     cursor: pointer;
+
+     &:hover {
+       background: #666;
+     }
+   }
+ }
+
+ .container {
+   padding-top: 50px;
+   transform: translateY(100px);
+   opacity: 0;
+   animation: showContainer 1s ease forwards;
+ }
+
+ // 文章列表
+ .articles {
+   width: 1020px;
+   margin: 15px auto;
+   display: flex;
+   flex-wrap: wrap;
+
+   .article-item {
+     background: #fff;
+     box-sizing: border-box;
+     padding: 20px;
+     margin: 15px 30px;
+     background-size: 100% 100%;
+     width: 450px;
+     border-radius: 8px;
+     box-shadow: #333 0 0 8px -2px;
+     transition: all 0.4s ease;
+     position: relative;
+
+     &:hover {
+       transform: translateY(-5px);
+     }
+   }
+
+   .title {
+     margin-bottom: 10px;
+     font-size: 18px;
+   }
+
+   .summary {
+     background-size: cover;
+     background-position: center;
+     width: 100%;
+     height: 240px;
+     transition: all 0.4s ease;
+     margin-bottom: 10px;
+
+     &:hover {
+       .label-warp {
+         opacity: 1;
+       }
+     }
+
+     .label-warp {
+       width: 100%;
+       height: 100%;
+       display: flex;
+       justify-content: center;
+       align-items: center;
+       background: rgba($color: #666, $alpha: 0.85);
+       opacity: 0;
+       transition: all 0.4s ease;
+     }
+
+     label {
+       color: #fff;
+     }
+   }
+
+   .date {
+     font-size: 12px;
+   }
+
+   .read-btn {
+     position: absolute;
+     display: block;
+     padding: 2px 12px;
+     bottom: 16px;
+     right: 20px;
+     color: #fff;
+     background: #339999;
+     border-radius: 3px;
+     font-size: 12px;
+     cursor: pointer;
+   }
+ }
+
+ //文章详情
+ .article-detail {
+   width: 800px;
+   padding: 30px 50px;
+   margin: 30px auto;
+   background: #fff;
+   box-shadow: #666 0 0 8px -2px;
+   border-radius: 10px;
+
+   .title {
+     font-size: 24px;
+     margin-bottom: 10px;
+   }
+
+   .create-time {
+     font-size: 12px;
+     color: #666;
+     margin-bottom: 15px;
+     padding-left: 3px;
+   }
+
+   .tag-list {
+     margin: 5px 0;
+
+     .tag-item {
+       font-size: 12px;
+       display: inline-block;
+       padding: 2px 8px;
+       background: #339999;
+       margin-right: 6px;
+       color: #fff;
+       border-radius: 5px;
+     }
+   }
+
+   .picture {
+     max-width: 100%;
+     margin: 0 auto;
+     margin-bottom: 20px;
+   }
+
+ }
+
+
+
+ @keyframes showContainer {
+   to {
+     transform: translateY(0);
+     opacity: 1;
+   }
  }
