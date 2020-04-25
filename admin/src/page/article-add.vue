@@ -134,7 +134,7 @@ export default {
         .then(res => {
           if (res.code == 200) {
             Message.success("上传成功");
-            this.picture = "http://" + res.data[0];
+            this.picture = "//" + res.data[0];
           }
         })
         .catch(err => {
