@@ -5,25 +5,29 @@ import bg from "./util/bg";
 $(function name() {
   let loading = false;
 
-  bg("bg", 60);
+  // bg("bg", 60);
 
   $(".account").focusin(function () {
-    $(".account-label").addClass("selected");
+    $(this).addClass("selected-input");
+    $(".account-label").addClass("selected-label");
   });
 
   $(".account").focusout(function () {
     if ($(this).val() == "") {
-      $(".account-label").removeClass("selected");
+      $(this).removeClass("selected-input");
+      $(".account-label").removeClass("selected-label");
     }
   });
 
   $(".password").focusin(function () {
-    $(".password-label").addClass("selected");
+    $(this).addClass("selected-input");
+    $(".password-label").addClass("selected-label");
   });
 
   $(".password").focusout(function () {
     if ($(this).val() == "") {
-      $(".password-label").removeClass("selected");
+      $(this).removeClass("selected-input");
+      $(".password-label").removeClass("selected-label");
     }
   });
 
@@ -31,11 +35,11 @@ $(function name() {
     let account = $(".account").val();
     let password = $(".password").val();
     if (account == "") {
-      alert("account is empty")
+      showError("account is empty")
       return
     }
     if (password == "") {
-      alert("password is empty")
+      showError("password is empty")
       return
     }
     let data = JSON.stringify({
@@ -59,20 +63,48 @@ $(function name() {
           if (!redirectURL) return alert("no redirect url");
           location.href = redirectURL;
         } else {
-          alert(data.message)
+          showError(data.message)
         }
       },
       error: function (err) {
         loading = false;
-        alert("error")
+        showError("error")
       }
     })
   })
+
+  $(document).keyup(function (event) {
+    if (event.keyCode == 13) {
+      $(".login-btn").trigger("click");
+    }
+  });
 })
 
+function showSuccess(message) {
+  let e = $(`<div class="alert alert-success" role="alert" hidden>${message}</div>`);
+  $("body").append(e)
+  e.slideDown();
+  setTimeout(() => {
+    e.slideUp(function () {
+      e.remove();
+    })
+  }, 3000);
+}
+
+function showError(message) {
+  let e = $(`<div class="alert alert-danger" role="alert" hidden>${message}</div>`);
+  $("body").append(e)
+  e.slideDown();
+  setTimeout(() => {
+    e.slideUp(function () {
+      e.remove();
+    })
+  }, 2000);
+}
 
 function GetQueryString(name) {
   var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
   var r = window.location.search.substr(1).match(reg);
-  if (r != null) return (r[2]); return null;
+  if (r != null) return (r[2]);
+  return null;
 }

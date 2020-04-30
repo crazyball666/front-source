@@ -1,5 +1,6 @@
 {
+  "ENTRY_PATH": "/Users/crazyball/Node/front-source/user-module/app.js",
   "PROJECT_NAME": "user-module",
-  "HTML_PATH": "C:/Users/Administrator/Desktop/Go/src/user-module/view/resource.html",
-  "OUTPUT_PATH": "C:/Users/Administrator/Desktop/project/front-source/static"
+  "HTML_PATH": "/Users/crazyball/Golang/user-module/view/resource.html",
+  "OUTPUT_PATH": "/Users/crazyball/Node/front-source/static/user-module"
 }
