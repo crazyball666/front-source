@@ -1,11 +1,16 @@
 import "./scss/app.scss"
-import bg from "./util/bg";
 
 
+var particles = null;
+var loading = false;
 $(function name() {
-  let loading = false;
-
-  // bg("bg", 60);
+  particles = new Particles('.login-box', {
+    direction: "bottom",
+    particlesAmountCoefficient: 20,
+    oscillationCoefficient: 30,
+    duration: 500,
+    complete: handleComplete,
+  });
 
   $(".account").focusin(function () {
     $(this).addClass("selected-input");
@@ -42,35 +47,7 @@ $(function name() {
       showError("password is empty")
       return
     }
-    let data = JSON.stringify({
-      account,
-      password
-    })
-    if (loading) {
-      return
-    }
-    loading = true
-    $.ajax({
-      contentType: 'application/json',
-      type: 'POST',
-      url: `/login${window.location.search}`,
-      dataType: "json",
-      data,
-      success: function (data) {
-        loading = false
-        if (data.code == 200) {
-          let redirectURL = data.data.redirectURL;
-          if (!redirectURL) return alert("no redirect url");
-          location.href = redirectURL;
-        } else {
-          showError(data.message)
-        }
-      },
-      error: function (err) {
-        loading = false;
-        showError("error")
-      }
-    })
+    particles.disintegrate();
   })
 
   $(document).keyup(function (event) {
@@ -102,9 +79,48 @@ function showError(message) {
   }, 2000);
 }
 
-function GetQueryString(name) {
-  var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
-  var r = window.location.search.substr(1).match(reg);
-  if (r != null) return (r[2]);
-  return null;
+function handleComplete() {
+  !loading && startLogin();
+  loading = !loading;
+}
+
+function startLogin() {
+  let account = $(".account").val();
+  let password = $(".password").val();
+  if (account == "") {
+    showError("account is empty")
+    return
+  }
+  if (password == "") {
+    showError("password is empty")
+    return
+  }
+  let data = JSON.stringify({
+    account,
+    password
+  })
+  $.ajax({
+    contentType: 'application/json',
+    type: 'POST',
+    url: `/login${window.location.search}`,
+    dataType: "json",
+    data,
+    success: function (data) {
+      if (data.code == 200) {
+        let redirectURL = data.data.redirectURL;
+        if (!redirectURL) {
+          particles.integrate();
+          return showError("no redirect url");
+        }
+        location.href = redirectURL;
+      } else {
+        particles.integrate();
+        showError(data.message)
+      }
+    },
+    error: function (err) {
+      particles.integrate();
+      showError("error")
+    }
+  })
 }
