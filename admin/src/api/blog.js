@@ -4,6 +4,7 @@
 
 import ajax from '../common/ajax';
 
+// const BLOG_BASE = "//localhost:8002"
 const BLOG_BASE = '//www.crazyball.xyz';
 
 export default {

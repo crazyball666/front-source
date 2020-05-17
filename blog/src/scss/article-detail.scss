@@ -1,0 +1,36 @@
+//文章详情
+.article-detail {
+  width: 800px;
+  padding: 30px 50px;
+  margin: 30px auto;
+  background: #fff;
+  box-shadow: #666 0 0 8px -2px;
+  border-radius: 10px;
+
+  .title {
+    font-size: 26px;
+    margin-bottom: 15px;
+  }
+
+  .create-time {
+    font-size: 12px;
+    color: #666;
+    margin: 10px 0 25px;
+    padding-left: 3px;
+  }
+
+  .tag-list {
+    margin: 5px 0;
+
+    .tag-item {
+      font-size: 12px;
+      display: inline-block;
+      padding: 2px 8px;
+      background: #339999;
+      margin-right: 6px;
+      color: #fff;
+      border-radius: 5px;
+    }
+  }
+
+}

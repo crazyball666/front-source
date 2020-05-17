@@ -38,8 +38,34 @@
         </div>
         <img v-else :src="picture" alt class="img" />
       </el-upload>
+      <el-button
+        type="danger"
+        icon="el-icon-delete"
+        circle
+        class="delete-btn"
+        size="mini"
+        @click="picture=null"
+      ></el-button>
     </div>
-    <mavonEditor v-model="content" style="min-height:80vh;" />
+
+    <div class="editor-warp">
+      <el-button
+        class="full-screen-btn"
+        type="primary"
+        icon="el-icon-full-screen"
+        circle
+        @click="fullScreenEditor"
+        size="mini"
+      ></el-button>
+      <el-progress
+        :text-inside="true"
+        :stroke-width="20"
+        :percentage="editorUploadProgress"
+        class="upload-progress"
+        v-show="editorUploadProgress > 0"
+      ></el-progress>
+      <div id="editor"></div>
+    </div>
     <el-row type="flex" justify="center" class="submit-box">
       <el-button type="primary" round @click="handleSubmit" :loading="loading">保存</el-button>
     </el-row>
@@ -47,11 +73,13 @@
 </template>
 
 <script>
-import { mavonEditor } from "mavon-editor";
-import "mavon-editor/dist/css/index.css";
+import Editor from "wangeditor";
+// import { mavonEditor } from "mavon-editor";
+// import "mavon-editor/dist/css/index.css";
 import blogApi from "../api/blog";
 import fileApi from "../api/file";
 import { Message } from "element-ui";
+import file from "../api/file";
 export default {
   data() {
     return {
@@ -63,16 +91,14 @@ export default {
       summary: "",
       content: "",
       picture: "",
-      loadingStyle: { height: "0" }
+      loadingStyle: { height: "0" },
+      editor: null,
+      editorUploadProgress: 0
     };
   },
-  components: {
-    mavonEditor
-  },
   async mounted() {
-    // document
-    //   .querySelector(".v-note-edit")
-    //   .addEventListener("paste", this.paste);
+    this.createEditor();
+
     let res = await blogApi.getAllTags();
     this.tagList = res.data;
     if (this.$route.name == "articleEdit") {
@@ -82,6 +108,7 @@ export default {
         this.title = res.data.title;
         this.summary = res.data.summary;
         this.content = res.data.content;
+        this.editor.txt.html(this.content);
         this.picture = res.data.picture;
         let articleTags = res.data.tags.split(",");
         this.tagList.forEach(tag => {
@@ -138,23 +165,53 @@ export default {
           }
         })
         .catch(err => {
-          console.log(err);
+          Message.error(err);
         });
+    },
+    createEditor() {
+      this.editor = new Editor("#editor");
+      this.editor.customConfig.zIndex = 100;
+      this.editor.customConfig.onchange = html => {
+        this.content = html;
+      };
+      this.editor.customConfig.customUploadImg = (files, insert) => {
+        fileApi
+          .uploadFiles(files, progress => {
+            this.editorUploadProgress = progress;
+          })
+          .then(res => {
+            this.editorUploadProgress = 0;
+            if (res.code == 200) {
+              Message.success("上传成功");
+              res.data.forEach(item => {
+                insert(`//${item}`);
+              });
+            }
+          })
+          .catch(err => {
+            this.editorUploadProgress = 0;
+            Message.error(err);
+          });
+      };
+      this.editor.create();
+      let container = document.querySelector(".w-e-text-container");
+      container.style.setProperty("flex", "1");
+      container.style.setProperty("overflow", "scroll");
+      container.style.setProperty("background", "white");
+      container.style.removeProperty("height");
+    },
+    fullScreenEditor() {
+      let element = document.querySelector(".editor-warp");
+      if (element.requestFullscreen) {
+        element.requestFullscreen();
+      } else if (element.msRequestFullscreen) {
+        element.msRequestFullscreen();
+      } else if (element.mozRequestFullScreen) {
+        element.mozRequestFullScreen();
+      } else if (element.webkitRequestFullscreen) {
+        element.webkitRequestFullscreen();
+      }
     }
-    // async paste(event) {
-    //   if (event.clipboardData || event.originalEvent) {
-    //     var clipboardData =
-    //       event.clipboardData || event.originalEvent.clipboardData;
-    //     var items = clipboardData.items;
-    //     for (var i = 0; i < items.length; i++) {
-    //       if (items[i].type.indexOf("image") !== -1) {
-    //         event.preventDefault();
-    //         let blob = items[i].getAsFile();
-    //         alert("tupian");
-    //       }
-    //     }
-    //   }
-    // }
   }
 };
 </script>
@@ -175,6 +232,11 @@ export default {
   }
   .item-input {
     flex: 1;
+  }
+  .delete-btn {
+    margin-left: 10px;
+    flex: none;
+    align-self: center;
   }
   .img-uploader {
     border: 1px dashed #d9d9d9;
@@ -213,5 +275,26 @@ export default {
 .submit-box {
   margin: 30px;
   color: white;
+}
+.editor-warp {
+  position: relative;
+  height: 600px;
+  .full-screen-btn {
+    position: absolute;
+    top: 1px;
+    right: 10px;
+  }
+  .upload-progress {
+    position: absolute;
+    top: 40px;
+    width: 80%;
+    left: 10%;
+    z-index: 999;
+  }
+  #editor {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
 }
 </style>

@@ -9,7 +9,19 @@ const BLOG_BASE = '//file.crazyball.xyz';
 export default {
   async uploadFiles(file, func) {
     let formData = new FormData()
-    formData.append("files", file);
+    if (Array.isArray(file)) {
+      file.forEach(item => {
+        if (item.size > 5 * 1024 * 1024) {
+          throw new Error("file is too large")
+        }
+        formData.append("files", item);
+      })
+    } else {
+      if (file.size > 5 * 1024 * 1024) {
+        throw new Error("file is too large")
+      }
+      formData.append("files", file);
+    }
     let config = {
       headers: {
         "Content-Type": "multipart/form-data"
