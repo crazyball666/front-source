@@ -1,6 +1,8 @@
  @import "./index.scss";
  @import "./article-detail.scss";
  @import "./markdown.css";
+ @import "./components/sidebar.scss";
+ @import "./components/tags.scss";
 
  * {
    margin: 0px;
@@ -8,6 +10,25 @@
    font-size: 14px;
    color: #333;
    text-decoration: none;
+ }
+
+ .layout {
+   width: 960px;
+   padding: 50px 0;
+   margin: 0 auto;
+   display: flex;
+
+   .sidebar {
+     width: 220px;
+     background: white;
+     height: max-content;
+   }
+
+   .container {
+     flex: 1;
+     height: max-content;
+     box-shadow: #666 0 0 5px -2px;
+   }
  }
 
 
@@ -78,11 +99,11 @@
    }
  }
 
- .container {
-   padding-top: 50px;
-   opacity: 0;
-   animation: showContainer 1s ease forwards;
- }
+ //  .container {
+ //    padding-top: 50px;
+ //    opacity: 0;
+ //    animation: showContainer 1s ease forwards;
+ //  }
 
 
 
