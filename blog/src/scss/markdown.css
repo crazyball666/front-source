@@ -67,3 +67,8 @@
 .w-e-text img:hover {
   box-shadow: 0 0 5px #333;
 }
+
+pre {
+  word-break: break-all;
+  white-space: pre-wrap;
+}
