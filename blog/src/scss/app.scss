@@ -7,9 +7,13 @@
  * {
    margin: 0px;
    padding: 0px;
+   //  color: #333;
+   text-decoration: none;
+ }
+
+ html {
    font-size: 14px;
    color: #333;
-   text-decoration: none;
  }
 
  .layout {
@@ -100,15 +104,6 @@
      }
    }
  }
-
- //  .container {
- //    padding-top: 50px;
- //    opacity: 0;
- //    animation: showContainer 1s ease forwards;
- //  }
-
-
-
 
  @keyframes showContainer {
    to {

@@ -3,6 +3,7 @@
   padding: 30px 50px;
   background: #fff;
 
+
   .title {
     font-size: 26px;
     margin-bottom: 25px;
@@ -14,8 +15,103 @@
   .create-time {
     font-size: 12px;
     color: #666;
-    margin: 10px 0 25px;
+    margin: 5px 0 20px;
     padding-left: 3px;
   }
 
+  .add-comment-box {
+    margin: 80px 0 30px;
+    overflow: hidden;
+
+    .add-comment-title {
+      text-align: center;
+      color: #999;
+    }
+
+    .input-box {
+      text-align: center;
+    }
+
+    .name-input,
+    .email-input {
+      width: 35%;
+      margin: 15px 20px 0px;
+      outline: none;
+      padding: 8px;
+      border: none;
+      border-bottom: 1px solid #ccc;
+
+    }
+
+
+    .comment-input {
+      box-sizing: border-box;
+      border-radius: 8px;
+      padding: 12px;
+      border-color: #ccc;
+      width: 100%;
+      outline: none;
+      resize: none;
+      margin: 8px 0;
+    }
+
+    .add-comment-btn {
+      padding: 6px 18px;
+      background: #399;
+      border: none;
+      color: white;
+      border-radius: 5px;
+      float: right;
+      outline: none;
+      cursor: pointer;
+    }
+  }
+
+  .comment-box {
+    margin-top: 50px;
+
+    .comment-list {
+      max-height: 0;
+      overflow: hidden;
+      transition: all ease 0.4s;
+    }
+  }
+
+  .comment-item {
+    padding: 20px 10px;
+    border-bottom: 1px solid #eee;
+
+    .parent-comment-box {
+      background: #eee;
+      padding: 10px 15px;
+      border-radius: 8px;
+    }
+
+    .comment-name,
+    .parent-comment-name {
+      font-size: 14px;
+      color: #9c1006;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .comment-content,
+    .parent-comment-content {
+      margin-top: 5px;
+      margin-top: 4px;
+      color: #666;
+    }
+  }
+
+  .comment-footer {
+    margin-top: 20px;
+    text-align: center;
+    color: #999;
+
+    .load-more {
+      cursor: pointer;
+      color: #399;
+      font-weight: bold;
+    }
+  }
 }
