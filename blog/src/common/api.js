@@ -1,6 +1,6 @@
 let axios = require("axios")
 
-const blogHost = "//localhost:8002";
+const blogHost = "";
 
 axios.interceptors.response.use(res => {
   const data = res.data;
