@@ -35,6 +35,11 @@
       width: 100%;
       text-align: center;
       padding: 5px;
+      color: #333;
+
+      &:hover {
+        color: #888;
+      }
     }
   }
 
@@ -46,5 +51,9 @@
   .all-tags-box {
     font-size: 0;
     padding: 10px 5px;
+
+    .tag-item {
+      margin: 0 6px 10px 0;
+    }
   }
 }

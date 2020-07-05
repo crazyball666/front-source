@@ -1,0 +1,39 @@
+.archive {
+  padding: 30px;
+
+  .articles-group {
+    margin-bottom: 30px;
+  }
+
+  .group-key {
+    font-weight: bold;
+    margin-bottom: 5px;
+    font-size: 16px;
+
+    .key-icon {
+      font-size: 24px;
+      margin-right: 6px;
+      color: #3366aa;
+    }
+  }
+
+  .group-list {
+    padding-left: 1.5rem;
+  }
+
+  .group-item {
+    color: #333;
+    padding: 5px 0;
+
+    .tag-item {
+      margin-right: 4px;
+    }
+
+    a:hover {
+      color: #3366aa;
+      display: inline-block;
+      height: 100%;
+      line-height: 100%;
+    }
+  }
+}

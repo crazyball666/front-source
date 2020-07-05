@@ -3,11 +3,12 @@
  @import "./markdown.css";
  @import "./components/sidebar.scss";
  @import "./components/tags.scss";
+ @import "./archive.scss";
 
  * {
    margin: 0px;
    padding: 0px;
-   //  color: #333;
+   color: #333;
    text-decoration: none;
  }
 
