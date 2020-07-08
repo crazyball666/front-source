@@ -1,7 +1,7 @@
 @import "./loader.css";
 
 html {
-  font-size: 15px;
+  font-size: 14px;
 }
 
 body {
@@ -27,7 +27,7 @@ body {
 }
 
 .line {
-  height: 22rem;
+  // height: 20rem;
   width: 100%;
   position: absolute;
   top: 50%;
@@ -48,7 +48,7 @@ body {
 
 .login-box-warp {
   position: relative;
-  width: 550px;
+  width: 450px;
   height: 100%;
   margin: 0 auto;
   overflow: hidden;
@@ -71,7 +71,7 @@ body {
   }
 
   .login-box {
-    padding: 70px 80px;
+    padding: 40px 60px 10px;
     width: 100%;
     height: 100%;
     background-color: rgba($color: #fff, $alpha: 0.8);
@@ -79,7 +79,7 @@ body {
 
   .input-box {
     margin-bottom: 20px;
-    height: 60px;
+    height: 50px;
     background: #dedede;
     overflow: hidden;
     position: relative;
@@ -90,7 +90,7 @@ body {
 
   label {
     padding-left: 2rem;
-    line-height: 60px;
+    line-height: 50px;
     font-size: 1.2rem;
     // text-align: center;
     display: block;
@@ -105,7 +105,7 @@ body {
   }
 
   .selected-label {
-    padding-left: 3rem;
+    padding-left: 2.5rem;
     width: 30%;
     font-size: 1rem;
   }
@@ -140,7 +140,7 @@ body {
     height: 3rem;
     border-radius: 1.5rem;
     background: #399;
-    margin: 3rem auto 0px;
+    margin: 1.5rem auto 1rem;
     color: #eee;
     border: none;
     outline: none;
