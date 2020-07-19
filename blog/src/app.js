@@ -80,7 +80,10 @@ async function addComment() {
   let content = $(".comment-input").val()
 
   if (nickName == "" || email == "" || content == "") {
-    alert("不能为空")
+    mdui.snackbar({
+      message: "不能为空哦～",
+      position: "right-top",
+    });
     return;
   }
 
@@ -93,9 +96,16 @@ async function addComment() {
       $(".comment-list").css("max-height", "0px")
       loadCommentCount = 0;
       loadComment(articleId, commentPage)
+      mdui.snackbar({
+        message: "Success",
+        position: "right-top",
+      });
     }
   } catch (err) {
-    alert("err")
+    mdui.snackbar({
+      message: err,
+      position: "right-top",
+    });
   }
   $(".add-comment-btn").removeAttr("disabled")
   $(".add-comment-btn").text("提交")

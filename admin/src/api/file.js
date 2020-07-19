@@ -4,7 +4,7 @@
 
 import ajax from '../common/ajax';
 
-const BLOG_BASE = '//file.crazyball.xyz';
+const BLOG_BASE = 'https://file.crazyball.xyz';
 
 export default {
   async uploadFiles(file, func) {

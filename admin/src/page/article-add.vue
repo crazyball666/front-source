@@ -199,6 +199,13 @@ export default {
       container.style.setProperty("overflow", "scroll");
       container.style.setProperty("background", "white");
       container.style.removeProperty("height");
+
+      // container.addEventListener("click", function(e) {
+      //   let target = e.target;
+      //   if (target.tagName == "IMG") {
+      //     target.setAttribute("style", "width:100px");
+      //   }
+      // });
     },
     fullScreenEditor() {
       let element = document.querySelector(".editor-warp");
@@ -278,7 +285,7 @@ export default {
 }
 .editor-warp {
   position: relative;
-  height: 600px;
+  height: 80vh;
   .full-screen-btn {
     position: absolute;
     top: 1px;
