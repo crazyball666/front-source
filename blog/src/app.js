@@ -3,6 +3,7 @@ import './common/bg'
 import api from './common/api'
 
 $(function () {
+  api.setupAjax();
   let path = location.pathname
   if (/^\/t\/.*/.test(path)) {
     setupArticleDetail()
