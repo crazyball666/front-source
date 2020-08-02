@@ -3,7 +3,10 @@ import "./scss/app.scss"
 
 var particles = null;
 var loading = false;
-$(function name() {
+$(function () {
+  let redirectURL = getQuery("redirectURL")
+  console.log(decodeURIComponent(redirectURL))
+
   particles = new Particles('.login-box', {
     direction: "bottom",
     particlesAmountCoefficient: 20,
@@ -107,11 +110,12 @@ function startLogin() {
     data,
     success: function (data) {
       if (data.code == 200) {
-        let redirectURL = data.data.redirectURL;
+        let redirectURL = decodeURIComponent(getQuery("redirectURL"))
         if (!redirectURL) {
           particles.integrate();
           return showError("no redirect url");
         }
+        redirectURL += `&ticket=${encodeURIComponent(data.data.ticket)}`
         location.href = redirectURL;
       } else {
         particles.integrate();
@@ -123,4 +127,15 @@ function startLogin() {
       showError("error")
     }
   })
+}
+
+function getQuery(key) {
+  var query = window.location.search.length > 0 ? window.location.search.substring(1) : "";
+  var vars = query.split("&");
+  for (var i = 0; i < vars.length; i++) {
+    var pair = vars[i].split("=");
+    if (pair[0] == key) {
+      return pair[1];
+    }
+  }
 }
