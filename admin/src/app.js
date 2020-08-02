@@ -10,7 +10,7 @@ import types from "./store/mutation-type"
 document.addEventListener(
   'DOMContentLoaded',
   () => {
-    let accessToken = localStorage.getItem("accessToken")
+    let accessToken = localStorage.getItem("access_token")
     let user = JSON.parse(localStorage.getItem("userInfo"))
     if (!user || !accessToken) {
       // location.href = "//user.crazyball.xyz/login?redirectURL=http://localhost:9001/verify?orginURL=http://localhost:9001/"
