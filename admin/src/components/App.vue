@@ -48,7 +48,7 @@
             </el-menu>
           </div>
         </el-col>
-        <el-col :span="20">
+        <el-col :span="20" class="container-row-col">
           <div class="content-box">
             <router-view />
           </div>
@@ -164,7 +164,6 @@ export default {
 
 .content-box {
   height: 100%;
-  flex: 1;
   padding: 30px 50px 0;
   box-sizing: border-box;
   background: white;
