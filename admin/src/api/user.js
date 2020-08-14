@@ -4,7 +4,7 @@
 
 import ajax from '../common/ajax';
 
-const USER_BASE = '//user.crazyball.xyz';
+const USER_BASE = 'https://user.crazyball.xyz';
 
 export default {
   // 用户相关

@@ -4,7 +4,7 @@
 
 import ajax from '../common/ajax';
 
-const SERVICE_BASE = '//service.crazyball.xyz';
+const SERVICE_BASE = 'https://service.crazyball.xyz';
 
 export default {
   async getDepolyConfig() {

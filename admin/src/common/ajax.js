@@ -4,7 +4,7 @@ import {
 } from 'element-ui';
 // import router from '../router'
 
-let token = window.localStorage.getItem("accessToken");
+let token = window.localStorage.getItem("access_token");
 axios.defaults.headers.common['access_token'] = token;
 
 axios.interceptors.response.use((response) => {
