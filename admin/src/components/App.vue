@@ -20,40 +20,34 @@
       </el-dropdown>
     </div>
     <div class="container">
-      <el-row class="container-row">
-        <el-col :span="4" class="container-row-col">
-          <div class="mune-box">
-            <el-menu
-              class="mune"
-              @select="handleSelect"
-              background-color="#666"
-              text-color="#fff"
-              active-text-color="#ffd04b"
-            >
-              <el-submenu index="1">
-                <span slot="title">Blog系统</span>
-                <el-menu-item index="1-1">文章管理</el-menu-item>
-                <el-menu-item index="1-2">标签管理</el-menu-item>
-              </el-submenu>
-              <el-submenu index="2">
-                <span slot="title">User系统</span>
-                <el-menu-item index="2-1">用户管理</el-menu-item>
-                <el-menu-item index="2-2">角色管理</el-menu-item>
-                <el-menu-item index="2-3">权限管理</el-menu-item>
-              </el-submenu>
-              <el-submenu index="3">
-                <span slot="title">Service系统</span>
-                <el-menu-item index="3-1">自动部署</el-menu-item>
-              </el-submenu>
-            </el-menu>
-          </div>
-        </el-col>
-        <el-col :span="20" class="container-row-col">
-          <div class="content-box">
-            <router-view />
-          </div>
-        </el-col>
-      </el-row>
+      <div class="mune-box">
+        <el-menu
+          class="mune"
+          @select="handleSelect"
+          background-color="#666"
+          text-color="#fff"
+          active-text-color="#ffd04b"
+        >
+          <el-submenu index="1">
+            <span slot="title">Blog系统</span>
+            <el-menu-item index="1-1">文章管理</el-menu-item>
+            <el-menu-item index="1-2">标签管理</el-menu-item>
+          </el-submenu>
+          <el-submenu index="2">
+            <span slot="title">User系统</span>
+            <el-menu-item index="2-1">用户管理</el-menu-item>
+            <el-menu-item index="2-2">角色管理</el-menu-item>
+            <el-menu-item index="2-3">权限管理</el-menu-item>
+          </el-submenu>
+          <el-submenu index="3">
+            <span slot="title">Service系统</span>
+            <el-menu-item index="3-1">自动部署</el-menu-item>
+          </el-submenu>
+        </el-menu>
+      </div>
+      <div class="content-box">
+        <router-view />
+      </div>
     </div>
   </div>
 </template>
@@ -145,15 +139,14 @@ export default {
 }
 .container {
   flex: 1;
+  display: flex;
+  flex-direction: row;
   overflow: hidden;
-}
-.container-row,
-.container-row-col {
-  min-width: 200px;
-  height: 100%;
 }
 .mune-box {
   height: 100%;
+  width: 16%;
+  min-width: 200px;
   background: #666;
   overflow-x: hidden;
   overflow-y: scroll;
@@ -163,6 +156,7 @@ export default {
 }
 
 .content-box {
+  flex: 1;
   height: 100%;
   padding: 30px 50px 0;
   box-sizing: border-box;
