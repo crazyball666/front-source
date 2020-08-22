@@ -3,5 +3,5 @@
   "PROJECT_NAME": "admin",
   "HTML_PATH": "/Users/crazyball/Golang/admin/view/index.html",
   "OUTPUT_PATH": "/Users/crazyball/Node/front-source/static/admin",
-  "PUBLIC_PATH": "https://static.crazyball.xyz/admin"
+  "PUBLIC_PATH": "https://static.crazyball.xyz/admin/"
 }
