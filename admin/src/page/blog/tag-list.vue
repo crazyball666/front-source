@@ -37,14 +37,14 @@
 </template>
 
 <script>
-import blogApi from "../api/blog";
+import blogApi from "../../api/blog";
 export default {
   data: () => {
     return {
       loading: false,
       tagList: [],
       tagCount: 0,
-      currentPage: 1
+      currentPage: 1,
     };
   },
   async mounted() {
@@ -53,30 +53,30 @@ export default {
     this.loading = false;
   },
   methods: {
-    updateList: async function() {
+    updateList: async function () {
       let res = await blogApi.getTagList(this.currentPage - 1, 10);
       this.tagList = res.data.tags;
       this.tagCount = res.data.count;
     },
     //handle
-    pageDidChange: async function(page) {
+    pageDidChange: async function (page) {
       this.currentPage = page;
       await this.updateList();
     },
-    handleEdit: function(pid) {
+    handleEdit: function (pid) {
       // this.$router.push(`/article-edit/${pid}`);
     },
-    handleDelete: function(pid) {
+    handleDelete: function (pid) {
       this.$confirm("是否删除该标签?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
-        type: "warning"
+        type: "warning",
       })
         .then(() => blogApi.deleteTag(pid))
-        .then(res => {
+        .then((res) => {
           this.$message({
             type: "success",
-            message: "删除成功!"
+            message: "删除成功!",
           });
           this.loading = true;
           return this.updateList();
@@ -86,16 +86,16 @@ export default {
         })
         .catch(() => {});
     },
-    handleAddTag: function() {
+    handleAddTag: function () {
       this.$prompt("请输入新标签", "提示", {
         confirmButtonText: "确定",
-        cancelButtonText: "取消"
+        cancelButtonText: "取消",
       })
         .then(({ value }) => blogApi.createTag({ content: value }))
-        .then(data => {
+        .then((data) => {
           this.$message({
             type: "success",
-            message: "创建成功"
+            message: "创建成功",
           });
           this.loading = true;
           return this.updateList();
@@ -104,8 +104,8 @@ export default {
           this.loading = false;
         })
         .catch(() => {});
-    }
-  }
+    },
+  },
 };
 </script>
 

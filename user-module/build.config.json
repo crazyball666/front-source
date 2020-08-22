@@ -2,5 +2,6 @@
   "ENTRY_PATH": "/Users/crazyball/Node/front-source/user-module/app.js",
   "PROJECT_NAME": "user-module",
   "HTML_PATH": "/Users/crazyball/Golang/user-module/view/resource.html",
-  "OUTPUT_PATH": "/Users/crazyball/Node/front-source/static/user-module"
+  "OUTPUT_PATH": "/Users/crazyball/Node/front-source/static/user-module",
+  "PUBLIC_PATH": "https://static.crazyball.xyz/user-module"
 }

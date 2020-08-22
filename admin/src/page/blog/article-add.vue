@@ -74,12 +74,9 @@
 
 <script>
 import Editor from "wangeditor";
-// import { mavonEditor } from "mavon-editor";
-// import "mavon-editor/dist/css/index.css";
-import blogApi from "../api/blog";
-import fileApi from "../api/file";
 import { Message } from "element-ui";
-import file from "../api/file";
+import blogApi from "../../api/blog";
+import fileApi from "../../api/file";
 export default {
   data() {
     return {
@@ -93,7 +90,7 @@ export default {
       picture: "",
       loadingStyle: { height: "0" },
       editor: null,
-      editorUploadProgress: 0
+      editorUploadProgress: 0,
     };
   },
   async mounted() {
@@ -111,7 +108,7 @@ export default {
         this.editor.txt.html(this.content);
         this.picture = res.data.picture;
         let articleTags = res.data.tags.split(",");
-        this.tagList.forEach(tag => {
+        this.tagList.forEach((tag) => {
           if (articleTags.includes(tag.content)) {
             this.tags.push(tag.p_id);
           }
@@ -127,27 +124,27 @@ export default {
         tags: this.tags.join(","),
         summary: this.summary,
         content: this.content,
-        picture: this.picture
+        picture: this.picture,
       };
       if (this.pid) {
         blogApi
           .updateArticle(this.pid, article)
-          .then(res => {
+          .then((res) => {
             this.loading = false;
             Message.success("修改成功");
           })
-          .catch(err => {
+          .catch((err) => {
             this.loading = false;
           });
       } else {
         blogApi
           .createArticle(article)
-          .then(res => {
+          .then((res) => {
             this.loading = false;
             Message.success("创建成功");
             this.$router.push("/blog/article-list");
           })
-          .catch(err => {
+          .catch((err) => {
             this.loading = false;
           });
       }
@@ -155,40 +152,40 @@ export default {
     uploadImg(info) {
       this.picture = "";
       fileApi
-        .uploadFiles(info.file, progress => {
+        .uploadFiles(info.file, (progress) => {
           this.loadingStyle.height = progress + "%";
         })
-        .then(res => {
+        .then((res) => {
           if (res.code == 200) {
             Message.success("上传成功");
             this.picture = "//" + res.data[0];
           }
         })
-        .catch(err => {
+        .catch((err) => {
           Message.error(err);
         });
     },
     createEditor() {
       this.editor = new Editor("#editor");
       this.editor.customConfig.zIndex = 100;
-      this.editor.customConfig.onchange = html => {
+      this.editor.customConfig.onchange = (html) => {
         this.content = html;
       };
       this.editor.customConfig.customUploadImg = (files, insert) => {
         fileApi
-          .uploadFiles(files, progress => {
+          .uploadFiles(files, (progress) => {
             this.editorUploadProgress = progress;
           })
-          .then(res => {
+          .then((res) => {
             this.editorUploadProgress = 0;
             if (res.code == 200) {
               Message.success("上传成功");
-              res.data.forEach(item => {
+              res.data.forEach((item) => {
                 insert(`//${item}`);
               });
             }
           })
-          .catch(err => {
+          .catch((err) => {
             this.editorUploadProgress = 0;
             Message.error(err);
           });
@@ -218,8 +215,8 @@ export default {
       } else if (element.webkitRequestFullscreen) {
         element.webkitRequestFullscreen();
       }
-    }
-  }
+    },
+  },
 };
 </script>
 

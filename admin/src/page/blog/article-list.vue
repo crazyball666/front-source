@@ -54,14 +54,14 @@
 </template>
 
 <script>
-import blogApi from "../api/blog";
+import blogApi from "../../api/blog";
 export default {
   data: () => {
     return {
       loading: false,
       articleList: [],
       articleCount: 0,
-      currentPage: 1
+      currentPage: 1,
     };
   },
   async mounted() {
@@ -70,39 +70,39 @@ export default {
     this.loading = false;
   },
   methods: {
-    updateList: async function() {
+    updateList: async function () {
       let res = await blogApi.getArticleList(this.currentPage - 1, 10);
       this.articleList = res.data.articles;
       this.articleCount = res.data.count;
     },
     //handle
-    pageDidChange: async function(page) {
+    pageDidChange: async function (page) {
       this.currentPage = page;
       await this.updateList();
     },
-    handleEdit: function(pid) {
+    handleEdit: function (pid) {
       this.$router.push(`/blog/article-edit/${pid}`);
     },
-    handleDelete: function(pid) {
+    handleDelete: function (pid) {
       this.$confirm("是否删除该文章?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
-        type: "warning"
+        type: "warning",
       })
         .then(() => blogApi.deleteArticle(pid))
         .then(() => this.updateList())
-        .then(res => {
+        .then((res) => {
           this.$message({
             type: "success",
-            message: "删除成功!"
+            message: "删除成功!",
           });
         })
         .catch(() => {});
     },
-    handleAddArticle: function() {
+    handleAddArticle: function () {
       this.$router.push("/blog/article-add");
-    }
-  }
+    },
+  },
 };
 </script>
 
