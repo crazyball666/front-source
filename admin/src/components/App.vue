@@ -149,7 +149,7 @@ export default {
   min-width: 200px;
   background: #666;
   overflow-x: hidden;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 .mune {
   height: 100%;

@@ -48,24 +48,8 @@
       ></el-button>
     </div>
 
-    <div class="editor-warp">
-      <el-button
-        class="full-screen-btn"
-        type="primary"
-        icon="el-icon-full-screen"
-        circle
-        @click="fullScreenEditor"
-        size="mini"
-      ></el-button>
-      <el-progress
-        :text-inside="true"
-        :stroke-width="20"
-        :percentage="editorUploadProgress"
-        class="upload-progress"
-        v-show="editorUploadProgress > 0"
-      ></el-progress>
-      <div id="editor"></div>
-    </div>
+    <Editor :value="content" @change="onEditorChange" :setup="isSetupEditor" />
+
     <el-row type="flex" justify="center" class="submit-box">
       <el-button type="primary" round @click="handleSubmit" :loading="loading">保存</el-button>
     </el-row>
@@ -73,11 +57,15 @@
 </template>
 
 <script>
-import Editor from "wangeditor";
+// import Editor from "wangeditor";
+import Editor from "../../components/Editor.vue";
 import { Message } from "element-ui";
 import blogApi from "../../api/blog";
 import fileApi from "../../api/file";
 export default {
+  components: {
+    Editor,
+  },
   data() {
     return {
       loading: false,
@@ -89,13 +77,10 @@ export default {
       content: "",
       picture: "",
       loadingStyle: { height: "0" },
-      editor: null,
-      editorUploadProgress: 0,
+      isSetupEditor: false,
     };
   },
   async mounted() {
-    this.createEditor();
-
     let res = await blogApi.getAllTags();
     this.tagList = res.data;
     if (this.$route.name == "articleEdit") {
@@ -105,7 +90,7 @@ export default {
         this.title = res.data.title;
         this.summary = res.data.summary;
         this.content = res.data.content;
-        this.editor.txt.html(this.content);
+        // this.editor.txt.html(this.content);
         this.picture = res.data.picture;
         let articleTags = res.data.tags.split(",");
         this.tagList.forEach((tag) => {
@@ -115,8 +100,14 @@ export default {
         });
       }
     }
+    this.$nextTick(function () {
+      this.isSetupEditor = true;
+    });
   },
   methods: {
+    onEditorChange(html) {
+      this.content = html;
+    },
     handleSubmit() {
       this.loading = true;
       let article = {
@@ -165,57 +156,6 @@ export default {
           Message.error(err);
         });
     },
-    createEditor() {
-      this.editor = new Editor("#editor");
-      this.editor.customConfig.zIndex = 100;
-      this.editor.customConfig.onchange = (html) => {
-        this.content = html;
-      };
-      this.editor.customConfig.customUploadImg = (files, insert) => {
-        fileApi
-          .uploadFiles(files, (progress) => {
-            this.editorUploadProgress = progress;
-          })
-          .then((res) => {
-            this.editorUploadProgress = 0;
-            if (res.code == 200) {
-              Message.success("上传成功");
-              res.data.forEach((item) => {
-                insert(`//${item}`);
-              });
-            }
-          })
-          .catch((err) => {
-            this.editorUploadProgress = 0;
-            Message.error(err);
-          });
-      };
-      this.editor.create();
-      let container = document.querySelector(".w-e-text-container");
-      container.style.setProperty("flex", "1");
-      container.style.setProperty("overflow", "scroll");
-      container.style.setProperty("background", "white");
-      container.style.removeProperty("height");
-
-      // container.addEventListener("click", function(e) {
-      //   let target = e.target;
-      //   if (target.tagName == "IMG") {
-      //     target.setAttribute("style", "width:100px");
-      //   }
-      // });
-    },
-    fullScreenEditor() {
-      let element = document.querySelector(".editor-warp");
-      if (element.requestFullscreen) {
-        element.requestFullscreen();
-      } else if (element.msRequestFullscreen) {
-        element.msRequestFullscreen();
-      } else if (element.mozRequestFullScreen) {
-        element.mozRequestFullScreen();
-      } else if (element.webkitRequestFullscreen) {
-        element.webkitRequestFullscreen();
-      }
-    },
   },
 };
 </script>
@@ -259,7 +199,7 @@ export default {
     right: 0;
     background: rgba(152, 251, 152, 0.7);
     transition: height 0.3s linear;
-    z-index: -1;
+    // z-index: -1;
   }
   .img-uploader-icon {
     font-size: 28px;
@@ -279,26 +219,5 @@ export default {
 .submit-box {
   margin: 30px;
   color: white;
-}
-.editor-warp {
-  position: relative;
-  height: 80vh;
-  .full-screen-btn {
-    position: absolute;
-    top: 1px;
-    right: 10px;
-  }
-  .upload-progress {
-    position: absolute;
-    top: 40px;
-    width: 80%;
-    left: 10%;
-    z-index: 999;
-  }
-  #editor {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-  }
 }
 </style>
