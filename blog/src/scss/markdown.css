@@ -1,3 +1,8 @@
+.w-e-text {
+  line-height: 1.8;
+}
+
+.w-e-text div,
 .w-e-text p,
 .w-e-text h1,
 .w-e-text h2,
@@ -7,20 +12,19 @@
 .w-e-text table,
 .w-e-text pre {
   margin: 10px 0;
-  line-height: 1.5;
 }
 
 .w-e-text ul,
 .w-e-text ol {
-  margin: 10px 0 10px 20px;
+  margin: 10px 0 10px 2em;
+  padding: 0;
 }
 
 .w-e-text blockquote {
   display: block;
   border-left: 8px solid #d0e5f2;
-  padding: 5px 10px;
+  padding: 0.8em;
   margin: 10px 0;
-  line-height: 1.4;
   font-size: 100%;
   background-color: #f1f1f1;
 }
@@ -29,14 +33,16 @@
   display: inline-block;
   *display: inline;
   *zoom: 1;
-  background-color: #f1f1f1;
-  border-radius: 3px;
-  padding: 3px 5px;
+  background-color: #444;
+  color: #eee;
+  border-radius: 4px;
+  padding: 0.8em;
   margin: 0 3px;
 }
 
 .w-e-text pre code {
   display: block;
+  overflow-x: auto;
 }
 
 .w-e-text table {
@@ -52,6 +58,8 @@
 }
 
 .w-e-text table th {
+  font-weight: bold;
+  background: #d0e5f2;
   border-bottom: 2px solid #ccc;
   text-align: center;
 }
@@ -68,7 +76,7 @@
   box-shadow: 0 0 5px #333;
 }
 
-pre {
-  word-break: break-all;
-  white-space: pre-wrap;
+.w-e-text a:hover {
+  color: inherit;
+  color: #3399dd;
 }

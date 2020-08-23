@@ -2,5 +2,6 @@
 	"PROJECT_NAME": "blog",
 	"ENTRY_PATH": "/Users/crazyball/Node/front-source/blog/src/app.js",
 	"OUTPUT_PATH": "/Users/crazyball/Node/front-source/static/blog",
-	"HTML_PATH": "/Users/crazyball/Golang/blog/view/resource.html"
+	"HTML_PATH": "/Users/crazyball/Golang/blog/view/resource.html",
+	"PUBLIC_PATH": "https://static.crazyball.xyz/blog/"
 }
