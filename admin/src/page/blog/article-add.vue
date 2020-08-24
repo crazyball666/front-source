@@ -1,5 +1,6 @@
 <template>
   <div class="article-add">
+    <div v-loading="loadingArticle" class="loading-mask" v-show="loadingArticle"></div>
     <h1 class="title">新增文章</h1>
     <div class="item-box">
       <span>标题:</span>
@@ -48,7 +49,12 @@
       ></el-button>
     </div>
 
-    <Editor :value="content" @change="onEditorChange" :setup="isSetupEditor" />
+    <Editor
+      :value="content"
+      @change="onEditorChange"
+      :setup="isSetupEditor"
+      @onSave="handleSubmit"
+    />
 
     <el-row type="flex" justify="center" class="submit-box">
       <el-button type="primary" round @click="handleSubmit" :loading="loading">保存</el-button>
@@ -68,6 +74,7 @@ export default {
   },
   data() {
     return {
+      loadingArticle: false,
       loading: false,
       pid: null,
       tagList: [],
@@ -81,24 +88,30 @@ export default {
     };
   },
   async mounted() {
+    this.loadingArticle = true;
     let res = await blogApi.getAllTags();
     this.tagList = res.data;
+    this.loadingArticle = false;
     if (this.$route.name == "articleEdit") {
-      this.pid = this.$route.params.pid;
-      let res = await blogApi.getArticle(this.$route.params.pid);
-      if (res.code == 200) {
-        this.title = res.data.title;
-        this.summary = res.data.summary;
-        this.content = res.data.content;
-        // this.editor.txt.html(this.content);
-        this.picture = res.data.picture;
-        let articleTags = res.data.tags.split(",");
-        this.tagList.forEach((tag) => {
-          if (articleTags.includes(tag.content)) {
-            this.tags.push(tag.p_id);
-          }
-        });
-      }
+      this.loadingArticle = true;
+      try {
+        this.pid = this.$route.params.pid;
+        let res = await blogApi.getArticle(this.$route.params.pid);
+        if (res.code == 200) {
+          this.title = res.data.title;
+          this.summary = res.data.summary;
+          this.content = res.data.content;
+          // this.editor.txt.html(this.content);
+          this.picture = res.data.picture;
+          let articleTags = res.data.tags.split(",");
+          this.tagList.forEach((tag) => {
+            if (articleTags.includes(tag.content)) {
+              this.tags.push(tag.p_id);
+            }
+          });
+        }
+      } catch (err) {}
+      this.loadingArticle = false;
     }
     this.$nextTick(function () {
       this.isSetupEditor = true;
@@ -109,6 +122,7 @@ export default {
       this.content = html;
     },
     handleSubmit() {
+      this.loadingArticle = true;
       this.loading = true;
       let article = {
         title: this.title,
@@ -122,21 +136,25 @@ export default {
           .updateArticle(this.pid, article)
           .then((res) => {
             this.loading = false;
+            this.loadingArticle = false;
             Message.success("修改成功");
           })
           .catch((err) => {
             this.loading = false;
+            this.loadingArticle = false;
           });
       } else {
         blogApi
           .createArticle(article)
           .then((res) => {
             this.loading = false;
+            this.loadingArticle = false;
             Message.success("创建成功");
             this.$router.push("/blog/article-list");
           })
           .catch((err) => {
             this.loading = false;
+            this.loadingArticle = false;
           });
       }
     },
@@ -161,6 +179,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.loading-mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 9999;
+}
 .title {
   font-size: 20px;
   margin-bottom: 20px;

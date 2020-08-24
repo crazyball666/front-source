@@ -1,5 +1,5 @@
 <template>
-  <div :class="[`editor-warp`,isFullScreen?`fullScreen`:``]">
+  <div :class="[`editor-warp`,isFullScreen?`fullScreen`:``]" @keydown.esc="isFullScreen=false">
     <div class="mask" @click.self="isFullScreen = false">
       <el-button
         class="full-screen-btn"
@@ -15,7 +15,13 @@
         class="upload-progress"
         v-show="editorUploadProgress > 0"
       ></el-progress>
-      <div id="editor" v-loading="!setup" element-loading-text="拼命加载中"></div>
+      <div
+        id="editor"
+        v-loading="!setup"
+        element-loading-text="拼命加载中"
+        @keydown.ctrl.83.prevent.stop="onSave"
+        @keydown.meta.83.prevent.stop="onSave"
+      ></div>
     </div>
   </div>
 </template>
@@ -38,6 +44,11 @@ export default {
   // 挂载
   mounted() {
     this.createEditor();
+    // document
+    //   .querySelector(".editor-warp")
+    //   .addEventListener("animationend", function () {
+    //     alert(111);
+    //   });
   },
   watch: {
     value: function (newValue, oldValue) {
@@ -77,6 +88,9 @@ export default {
     },
     fullScreen() {
       this.isFullScreen = !this.isFullScreen;
+    },
+    onSave() {
+      this.$emit("onSave");
     },
   },
 };
@@ -126,7 +140,7 @@ export default {
   margin: auto;
   z-index: 999;
   .mask {
-    padding: 8vh 8vw;
+    padding: 2vh 2vw;
     box-sizing: border-box;
   }
   #editor {
