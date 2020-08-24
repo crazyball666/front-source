@@ -29,18 +29,14 @@
   background-color: #f1f1f1;
 }
 
-.w-e-text code {
-  display: inline-block;
-  *display: inline;
-  *zoom: 1;
-  background-color: #444;
-  color: #eee;
+.w-e-text pre {
+  background: #444;
   border-radius: 4px;
-  padding: 0.8em;
-  margin: 0 3px;
+  overflow: hidden;
 }
 
-.w-e-text pre code {
+.w-e-text code {
+  padding: 0.8em;
   display: block;
   overflow-x: auto;
 }

@@ -22,6 +22,10 @@ async function setupArticleDetail() {
   let content = $(".content").text();
   $(".content").html(content);
 
+  document.querySelectorAll('.w-e-text pre code').forEach((block) => {
+    hljs.highlightBlock(block);
+  });
+
   loadComment(articleId, commentPage)
 }
 
