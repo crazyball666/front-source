@@ -547,7 +547,7 @@
   var config = {
 
     // 默认菜单配置
-    menus: ['head', 'bold', 'fontSize', 'fontName', 'italic', 'underline', 'strikeThrough', 'foreColor', 'backColor', 'link', 'list', 'justify', 'quote', 'emoticon', 'image', 'table', 'video', 'code', 'undo', 'redo'],
+    menus: ['clear', 'head', 'bold', 'fontSize', 'fontName', 'italic', 'underline', 'strikeThrough', 'foreColor', 'backColor', 'link', 'list', 'justify', 'quote', 'emoticon', 'image', 'table', 'video', 'code', 'undo', 'redo'],
 
     fontNames: ['宋体', '微软雅黑', 'Arial', 'Tahoma', 'Verdana'],
 
@@ -3009,12 +3009,53 @@
     }
   };
 
+
+  /**
+   * 清除样式
+   */
+  function Clear(editor) {
+    this.editor = editor;
+    this.$elem = $('<div class="w-e-menu">\n            <i>Clear</i>\n        </div>');
+    this.type = 'click';
+
+    // 当前是否 active 状态
+    this._active = false;
+  }
+
+  // 原型
+  Clear.prototype = {
+    constructor: Clear,
+
+    // 点击事件
+    onClick: function onClick(e) {
+      // 点击菜单将触发这里
+
+      var editor = this.editor;
+      var isSeleEmpty = editor.selection.isSelectionEmpty();
+
+      if (isSeleEmpty) {
+        return;
+      }
+
+      // 执行 underline 命令
+      editor.cmd.do('removeFormat');
+
+      if (isSeleEmpty) {
+        // 需要将选取折叠起来
+        editor.selection.collapseRange();
+        editor.selection.restoreSelection();
+      }
+    },
+  };
+
   /*
       所有菜单的汇总
   */
 
   // 存储菜单的构造函数
   var MenuConstructors = {};
+
+  MenuConstructors.clear = Clear;
 
   MenuConstructors.bold = Bold;
 
