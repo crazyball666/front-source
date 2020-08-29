@@ -144,7 +144,8 @@ export default {
     box-sizing: border-box;
   }
   #editor {
-    max-width: 720px;
+    max-width: 1024px;
+    padding: 0 10px;
     margin: 0 auto;
     box-shadow: 0 0 10px #666;
   }
