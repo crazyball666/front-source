@@ -10,7 +10,7 @@
       width: 100px;
       height: 100px;
       border-radius: 50%;
-      left: 50px;
+      left: 65px;
       bottom: -50px;
     }
   }
@@ -24,6 +24,7 @@
 
   .description {
     text-align: center;
+    font-style: italic;
     color: #888;
   }
 
@@ -55,16 +56,14 @@
   }
 
   .tags-title {
-    border-left: 6px solid #333;
-    padding-left: 8px;
+    border-left: 8px solid #666;
+    padding: 3px 8px;
   }
 
-  .all-tags-box {
-    font-size: 0;
-    padding: 10px;
-
-    .tag-item {
-      margin: 0 6px 10px 0;
-    }
+  .tag-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 5px;
   }
 }

@@ -1,14 +1,22 @@
 .tag-item {
   font-size: 12px;
   display: inline-block;
-  padding: 4px 8px;
-  background: #00B8D4;
-  color: #fff;
-  border-radius: 5px;
+  padding: 6px 12px;
+  background: #00a38d;
+  color: #f3f3f3;
+  border-radius: 3px;
   cursor: pointer;
+
+  &:hover {
+    transition: all .3s ease;
+    background: #00BFA5;
+  }
 }
 
 .tag-list {
-  margin-top: 15px;
   font-size: 0;
+
+  .tag-item {
+    margin: 4px 4px;
+  }
 }

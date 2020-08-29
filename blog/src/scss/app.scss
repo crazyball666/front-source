@@ -7,24 +7,31 @@
    text-decoration: none;
  }
 
- html {
+ p {
+   margin: 0px;
+ }
+
+ body {
    font-size: 14px;
    color: #333;
+   padding: 50px 0;
  }
 
  .layout {
-   width: 1024px;
-   margin: 50px auto 0px;
+   max-width: 960px;
+   width: 100%;
+   margin: 0px auto;
    display: flex;
    animation: showContainer 0.5s ease;
 
    .sidebar {
-     width: 220px;
+     width: 230px;
      background: white;
      height: max-content;
    }
 
    .container {
+     margin-left: 15px;
      flex: 1;
      height: max-content;
      box-shadow: #666 0 0 5px -2px;
@@ -34,57 +41,14 @@
  }
 
 
- //头部
- .header {
-   background: #333;
-   height: 50px;
-   width: 100%;
-   position: fixed;
-   overflow: hidden;
-   left: 0;
-   top: 0;
-   z-index: 99;
-
-   .icon {
-     display: block;
-     background: url(../assert/menu.png);
-     background-size: cover;
-     width: 24px;
-     height: 24px;
-     margin: 13px 20px;
-     cursor: pointer;
-   }
-
-   .nav {
-     position: absolute;
-     display: flex;
-     height: 100%;
-     width: 240px;
-     top: 0;
-     right: 30px;
-   }
-
-   .nav-item {
-     flex: 1;
-     color: white;
-     list-style-type: none;
-     line-height: 50px;
-     text-align: center;
-     transition: background 0.4s ease;
-     cursor: pointer;
-
-     &:hover {
-       background: #666;
-     }
-   }
- }
-
  @keyframes showContainer {
    0% {
      opacity: 0;
+     transform: translateX(60px);
    }
 
    100% {
      opacity: 1;
+     transform: translateX(0px);
    }
  }
