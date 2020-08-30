@@ -126,7 +126,6 @@ export default {
     .toolBar {
       background: #555;
       color: #fff !important;
-      overflow-x: auto;
     }
     .editor {
       flex: 1;
