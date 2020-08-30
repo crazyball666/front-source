@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import Editor from "../vendor/wangEditor/wangEditor";
+import Editor from "../vendor/cbEditor/index";
 import "../vendor/wangEditor/wangEditor.scss";
 import { Message } from "element-ui";
 import fileApi from "../api/file";
