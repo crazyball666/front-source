@@ -4,7 +4,9 @@
   "description": "admin front source",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "cb-cli --dev",
+    "build": "cb-cli --build"
   },
   "author": "crazyball",
   "license": "ISC",

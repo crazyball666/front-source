@@ -2109,7 +2109,7 @@
                 fn: function fn() {
                   var $text = $('#' + textId);
                   var text = $text.val() || $text.html();
-                  text = replaceHtmlSymbol(text);
+                  // text = replaceHtmlSymbol(text);
                   if (type === 'new') {
                     // 新插入
                     _this._insertCode(text);
@@ -3225,7 +3225,7 @@
   */
 
   // 获取粘贴的纯文本
-  function getPasteText(e) {
+  function getPasteText(e, ignore = false) {
     var clipboardData = e.clipboardData || e.originalEvent && e.originalEvent.clipboardData;
     var pasteText = void 0;
     if (clipboardData == null) {
@@ -3233,7 +3233,9 @@
     } else {
       pasteText = clipboardData.getData('text/plain');
     }
-
+    if (ignore) {
+      return pasteText;
+    }
     return replaceHtmlSymbol(pasteText);
   }
 
@@ -3691,10 +3693,11 @@
         // code 中只能粘贴纯文本
         if (nodeName === 'CODE' || nodeName === 'PRE') {
           if (pasteTextHandle && isFunction(pasteTextHandle)) {
+            var pasteText = getPasteText(e, true);
             // 用户自定义过滤处理粘贴内容
             pasteText = '' + (pasteTextHandle(pasteText) || '');
           }
-          editor.cmd.do('insertHTML', '<p>' + pasteText + '</p>');
+          editor.cmd.do('insertHTML', pasteText);
           return;
         }
 

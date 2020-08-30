@@ -144,10 +144,10 @@ export default {
     box-sizing: border-box;
   }
   #editor {
-    max-width: 1024px;
-    padding: 0 10px;
-    margin: 0 auto;
     box-shadow: 0 0 10px #666;
+    .w-e-text-container {
+      padding: 20px 10%;
+    }
   }
   animation: fullScreen 0.4s ease;
 }
