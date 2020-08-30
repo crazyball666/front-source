@@ -3,11 +3,15 @@
 */
 
 import $ from './dom-core.js'
-import { replaceHtmlSymbol } from './util.js'
-import { objForEach } from './util.js'
+import {
+    replaceHtmlSymbol
+} from './util.js'
+import {
+    objForEach
+} from './util.js'
 
 // 获取粘贴的纯文本
-export function getPasteText(e) {
+export function getPasteText(e, ignore = false) {
     const clipboardData = e.clipboardData || (e.originalEvent && e.originalEvent.clipboardData)
     let pasteText
     if (clipboardData == null) {
@@ -15,7 +19,9 @@ export function getPasteText(e) {
     } else {
         pasteText = clipboardData.getData('text/plain')
     }
-
+    if (ignore) {
+        return pasteText
+    }
     return replaceHtmlSymbol(pasteText)
 }
 

@@ -2,7 +2,10 @@
     menu - img
 */
 import $ from '../../util/dom-core.js'
-import { getRandom, arrForEach } from '../../util/util.js'
+import {
+    getRandom,
+    arrForEach
+} from '../../util/util.js'
 import Panel from '../panel.js'
 
 // 构造函数
@@ -36,80 +39,182 @@ Image.prototype = {
 
     _createEditPanel: function () {
         const editor = this.editor
+        var imageStyle = editor._selectedImg[0].style;
 
         // id
-        const width30 = getRandom('width-30')
-        const width50 = getRandom('width-50')
-        const width100 = getRandom('width-100')
-        const delBtn = getRandom('del-btn')
+        const imgW = getRandom('img-width');
+        const imgH = getRandom('img-height');
+        const maxW = getRandom('img-max-width');
+        const maxH = getRandom('img-max-height');
+        const width30 = getRandom('width-30');
+        const width50 = getRandom('width-50');
+        const width80 = getRandom('width-80');
+        const width100 = getRandom('width-100');
+        const resetBtn = getRandom('reset-btn');
+        const delBtn = getRandom('del-btn');
 
         // tab 配置
-        const tabsConfig = [
-            {
-                title: '编辑图片',
-                tpl: `<div>
+        const tabsConfig = [{
+            title: '编辑图片',
+            tpl: `<div style="font-size:14px;color:#666">
                     <div class="w-e-button-container" style="border-bottom:1px solid #f1f1f1;padding-bottom:5px;margin-bottom:5px;">
-                        <span style="float:left;font-size:14px;margin:4px 5px 0 5px;color:#333;">最大宽度：</span>
-                        <button id="${width30}" class="left">30%</button>
-                        <button id="${width50}" class="left">50%</button>
-                        <button id="${width100}" class="left">100%</button>
+                        <span>原始宽度: ${editor._selectedImg[0].naturalWidth}</span>
+                        <br/>
+                        <span>原始高度: ${editor._selectedImg[0].naturalHeight}</span>
+                        <br/>
+                        <div style="margin:5px 0">
+                            <span style="display:inline-block;width:50px;text-align: right;">宽: </span>
+                            <input id="${imgW}" placeholder="width" value="${imageStyle.width}" style="border:none;border-bottom:1px solid black;" />
+                        </div>
+                        <div style="margin:5px 0">
+                            <span style="display:inline-block;width:50px;text-align: right;">高: </span>
+                            <input id="${imgH}" placeholder="height" value="${imageStyle.height}" style="border:none;border-bottom:1px solid black;" />
+                        </div>
+                        <div style="margin:5px 0">
+                            <span style="display:inline-block;width:50px;text-align: right;">最大宽: </span>
+                            <input id="${maxW}" placeholder="max width" value="${imageStyle.maxWidth}" style="border:none;border-bottom:1px solid black;" />
+                        </div>
+                        <div style="margin:5px 0">
+                            <span style="display:inline-block;width:50px;text-align: right;">最大高: </span>
+                            <input id="${maxH}" placeholder="max height" value="${imageStyle.maxHeight}" style="border:none;border-bottom:1px solid black;" />
+                        </div>
                     </div>
+                    <hr/>
                     <div class="w-e-button-container">
+                        <button id="${width30}" class="gray left">30%</button>
+                        <button id="${width50}" class="gray left">50%</button>
+                        <button id="${width80}" class="gray left">80%</button>
+                        <button id="${width100}" class="gray left">100%</button>
                         <button id="${delBtn}" class="gray left">删除图片</button>
+                        <button id="${resetBtn}" class="gray left">重置</button>
                     </dv>
                 </div>`,
-                events: [
-                    {
-                        selector: '#' + width30,
-                        type: 'click',
-                        fn: () => {
-                            const $img = editor._selectedImg
-                            if ($img) {
-                                $img.css('max-width', '30%')
-                            }
-                            // 返回 true，表示该事件执行完之后，panel 要关闭。否则 panel 不会关闭
-                            return true
+            events: [{
+                    selector: '#' + imgW,
+                    type: 'input',
+                    fn: function fn() {
+                        var $img = editor._selectedImg;
+                        if ($img) {
+                            $img.css('width', $('#' + imgW).val());
                         }
-                    },
-                    {
-                        selector: '#' + width50,
-                        type: 'click',
-                        fn: () => {
-                            const $img = editor._selectedImg
-                            if ($img) {
-                                $img.css('max-width', '50%')
-                            }
-                            // 返回 true，表示该事件执行完之后，panel 要关闭。否则 panel 不会关闭
-                            return true
-                        }
-                    },
-                    {
-                        selector: '#' + width100,
-                        type: 'click',
-                        fn: () => {
-                            const $img = editor._selectedImg
-                            if ($img) {
-                                $img.css('max-width', '100%')
-                            }
-                            // 返回 true，表示该事件执行完之后，panel 要关闭。否则 panel 不会关闭
-                            return true
-                        }
-                    },
-                    {
-                        selector: '#' + delBtn,
-                        type: 'click',
-                        fn: () => {
-                            const $img = editor._selectedImg
-                            if ($img) {
-                                $img.remove()
-                            }
-                            // 返回 true，表示该事件执行完之后，panel 要关闭。否则 panel 不会关闭
-                            return true
-                        }
+                        // 返回 true，表示该事件执行完之后，panel 要关闭。否则 panel 不会关闭
+                        return false;
                     }
-                ]
-            }
-        ]
+                }, {
+                    selector: '#' + imgH,
+                    type: 'input',
+                    fn: function fn() {
+                        var $img = editor._selectedImg;
+                        if ($img) {
+                            $img.css('height', $('#' + imgH).val());
+                        }
+                        // 返回 true，表示该事件执行完之后，panel 要关闭。否则 panel 不会关闭
+                        return false;
+                    }
+                }, {
+                    selector: '#' + maxW,
+                    type: 'input',
+                    fn: function fn() {
+                        var $img = editor._selectedImg;
+                        if ($img) {
+                            $img.css('max-width', $('#' + maxW).val());
+                        }
+                        // 返回 true，表示该事件执行完之后，panel 要关闭。否则 panel 不会关闭
+                        return false;
+                    }
+                }, {
+                    selector: '#' + maxH,
+                    type: 'input',
+                    fn: function fn() {
+                        var $img = editor._selectedImg;
+                        if ($img) {
+                            $img.css('max-height', $('#' + maxH).val());
+                        }
+                        // 返回 true，表示该事件执行完之后，panel 要关闭。否则 panel 不会关闭
+                        return false;
+                    }
+                },
+                {
+                    selector: '#' + width30,
+                    type: 'click',
+                    fn: () => {
+                        const $img = editor._selectedImg
+                        if ($img) {
+                            $img.css('max-width', '30%')
+                            $img.css('height', 'auto');
+                        }
+                        // 返回 true，表示该事件执行完之后，panel 要关闭。否则 panel 不会关闭
+                        return false
+                    }
+                },
+                {
+                    selector: '#' + width50,
+                    type: 'click',
+                    fn: () => {
+                        const $img = editor._selectedImg
+                        if ($img) {
+                            $img.css('max-width', '50%')
+                            $img.css('height', 'auto');
+                        }
+                        // 返回 true，表示该事件执行完之后，panel 要关闭。否则 panel 不会关闭
+                        return false
+                    }
+                },
+                {
+                    selector: '#' + width80,
+                    type: 'click',
+                    fn: () => {
+                        const $img = editor._selectedImg
+                        if ($img) {
+                            $img.css('max-width', '80%')
+                            $img.css('height', 'auto');
+                        }
+                        // 返回 true，表示该事件执行完之后，panel 要关闭。否则 panel 不会关闭
+                        return false
+                    }
+                },
+                {
+                    selector: '#' + width100,
+                    type: 'click',
+                    fn: () => {
+                        const $img = editor._selectedImg
+                        if ($img) {
+                            $img.css('max-width', '100%')
+                            $img.css('height', 'auto');
+                        }
+                        // 返回 true，表示该事件执行完之后，panel 要关闭。否则 panel 不会关闭
+                        return false
+                    }
+                }, {
+                    selector: '#' + resetBtn,
+                    type: 'click',
+                    fn: function fn() {
+                        var $img = editor._selectedImg;
+                        if ($img) {
+                            $img.removeAttr('style')
+                        }
+                        $("#" + imgW)[0].value = ""
+                        $("#" + imgH)[0].value = ""
+                        $("#" + maxW)[0].value = ""
+                        $("#" + maxH)[0].value = ""
+                        // 返回 true，表示该事件执行完之后，panel 要关闭。否则 panel 不会关闭
+                        return false;
+                    }
+                },
+                {
+                    selector: '#' + delBtn,
+                    type: 'click',
+                    fn: () => {
+                        const $img = editor._selectedImg
+                        if ($img) {
+                            $img.remove()
+                        }
+                        // 返回 true，表示该事件执行完之后，panel 要关闭。否则 panel 不会关闭
+                        return false
+                    }
+                }
+            ]
+        }]
 
         // 创建 panel 并显示
         const panel = new Panel(this, {
@@ -134,8 +239,7 @@ Image.prototype = {
         const linkBtnId = getRandom('link-btn')
 
         // tabs 的配置
-        const tabsConfig = [
-            {
+        const tabsConfig = [{
                 title: '上传图片',
                 tpl: `<div class="w-e-up-img-container">
                     <div id="${upTriggerId}" class="w-e-up-btn">
@@ -145,8 +249,7 @@ Image.prototype = {
                         <input id="${upFileId}" type="file" multiple="multiple" accept="image/jpg,image/jpeg,image/png,image/gif,image/bmp"/>
                     </div>
                 </div>`,
-                events: [
-                    {
+                events: [{
                         // 触发选择图片
                         selector: '#' + upTriggerId,
                         type: 'click',
@@ -193,23 +296,21 @@ Image.prototype = {
                         <button id="${linkBtnId}" class="right">插入</button>
                     </div>
                 </div>`,
-                events: [
-                    {
-                        selector: '#' + linkBtnId,
-                        type: 'click',
-                        fn: () => {
-                            const $linkUrl = $('#' + linkUrlId)
-                            const url = $linkUrl.val().trim()
+                events: [{
+                    selector: '#' + linkBtnId,
+                    type: 'click',
+                    fn: () => {
+                        const $linkUrl = $('#' + linkUrlId)
+                        const url = $linkUrl.val().trim()
 
-                            if (url) {
-                                uploadImg.insertLinkImg(url)
-                            }
-
-                            // 返回 true 表示函数执行结束之后关闭 panel
-                            return true
+                        if (url) {
+                            uploadImg.insertLinkImg(url)
                         }
+
+                        // 返回 true 表示函数执行结束之后关闭 panel
+                        return true
                     }
-                ]
+                }]
             } // second tab end
         ] // tabs end
 

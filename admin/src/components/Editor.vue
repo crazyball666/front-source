@@ -1,13 +1,10 @@
 <template>
-  <div :class="[`editor-warp`,isFullScreen?`fullScreen`:``]" @keydown.esc="isFullScreen=false">
-    <div class="mask" @click.self="isFullScreen = false">
-      <el-button
-        class="full-screen-btn"
-        type="primary"
-        icon="el-icon-full-screen"
-        size="mini"
-        @click="fullScreen"
-      >全屏编辑</el-button>
+  <div
+    :class="[`editor-warp`,`fullScreen`,closeAnimation?`closeAnimation`:``]"
+    @keydown.esc="onClose"
+    v-show="show"
+  >
+    <div class="mask" @click.self="onClose">
       <el-progress
         type="circle"
         :percentage="editorUploadProgress"
@@ -15,13 +12,17 @@
         class="upload-progress"
         v-show="editorUploadProgress > 0"
       ></el-progress>
-      <div
-        id="editor"
-        v-loading="!setup"
-        element-loading-text="拼命加载中"
-        @keydown.ctrl.83.prevent.stop="onSave"
-        @keydown.meta.83.prevent.stop="onSave"
-      ></div>
+      <div class="editor-box">
+        <div id="toolBar" class="toolBar"></div>
+        <div
+          id="editor"
+          class="editor"
+          v-loading="!setup"
+          element-loading-text="拼命加载中"
+          @keydown.ctrl.83.prevent.stop="onSave"
+          @keydown.meta.83.prevent.stop="onSave"
+        ></div>
+      </div>
     </div>
   </div>
 </template>
@@ -33,10 +34,10 @@ import { Message } from "element-ui";
 import fileApi from "../api/file";
 
 export default {
-  props: ["value", "setup"],
+  props: ["value", "setup", "show"],
   data() {
     return {
-      isFullScreen: false,
+      closeAnimation: false,
       editor: null,
       editorUploadProgress: 0,
     };
@@ -44,11 +45,13 @@ export default {
   // 挂载
   mounted() {
     this.createEditor();
-    // document
-    //   .querySelector(".editor-warp")
-    //   .addEventListener("animationend", function () {
-    //     alert(111);
-    //   });
+    let ele = document.querySelector(".editor-warp");
+    ele.addEventListener("animationend", (e) => {
+      if (this.closeAnimation) {
+        this.closeAnimation = false;
+        this.$emit("onClose");
+      }
+    });
   },
   watch: {
     value: function (newValue, oldValue) {
@@ -60,7 +63,7 @@ export default {
   methods: {
     /* 创建编辑器 */
     createEditor() {
-      this.editor = new Editor("#editor");
+      this.editor = new Editor("#toolBar", "#editor");
       this.editor.customConfig.zIndex = 100;
       this.editor.customConfig.onchange = (html) => {
         this.$emit("change", html);
@@ -86,11 +89,11 @@ export default {
       };
       this.editor.create();
     },
-    fullScreen() {
-      this.isFullScreen = !this.isFullScreen;
-    },
     onSave() {
       this.$emit("onSave");
+    },
+    onClose() {
+      this.closeAnimation = true;
     },
   },
 };
@@ -100,10 +103,10 @@ export default {
 .editor-warp {
   position: relative;
   height: 40vh;
-  .full-screen-btn {
-    position: absolute;
-    top: -36px;
-    right: 0;
+  .mask {
+    position: relative;
+    height: 100%;
+    background: rgba($color: #eee, $alpha: 0.8);
   }
   .upload-progress {
     width: 126px;
@@ -116,17 +119,22 @@ export default {
     margin: auto;
     z-index: 999;
   }
-  #editor {
-    height: 100%;
-    overflow-y: auto;
-    background: #ffffff;
+  .editor-box {
+    height: 600px;
     display: flex;
     flex-direction: column;
-  }
-  .mask {
-    position: relative;
-    height: 100%;
-    background: rgba($color: #ccc, $alpha: 0.7);
+    .toolBar {
+      background: #555;
+      color: #fff !important;
+      overflow-x: auto;
+    }
+    .editor {
+      flex: 1;
+      border: 1px solid #ccc;
+      overflow-y: auto;
+      background: #ffffff;
+      padding: 0 10%;
+    }
   }
 }
 .fullScreen {
@@ -139,17 +147,22 @@ export default {
   width: 100vw !important;
   margin: auto;
   z-index: 999;
+  animation: fullScreen 0.4s ease;
+
   .mask {
     padding: 2vh 2vw;
     box-sizing: border-box;
   }
-  #editor {
-    box-shadow: 0 0 10px #666;
-    .w-e-text-container {
-      padding: 20px 10%;
-    }
+  .editor-box {
+    box-shadow: 0 0 10px #333;
+    margin: 0 auto;
+    max-width: 960px;
+    height: 100%;
   }
-  animation: fullScreen 0.4s ease;
+}
+
+.closeAnimation {
+  animation: closeAnimation 0.4s ease;
 }
 
 @keyframes fullScreen {
@@ -160,6 +173,17 @@ export default {
   100% {
     opacity: 1;
     transform: scale(1, 1);
+  }
+}
+
+@keyframes closeAnimation {
+  0% {
+    opacity: 1;
+    transform: scale(1, 1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.5, 1.5);
   }
 }
 </style>

@@ -217,6 +217,9 @@
 }
 
 .w-e-toolbar .w-e-menu {
+  height: 48px;
+  // line-height: 48px;
+  font-size: 18px;
   position: relative;
   text-align: center;
   padding: 5px 10px;
@@ -224,11 +227,12 @@
 }
 
 .w-e-toolbar .w-e-menu i {
-  color: #999;
+  line-height: 40px;
+  color: #eee;
 }
 
 .w-e-toolbar .w-e-menu:hover i {
-  color: #333;
+  color: #ccc;
 }
 
 .w-e-toolbar .w-e-active i {

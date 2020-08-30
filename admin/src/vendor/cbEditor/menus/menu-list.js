@@ -5,6 +5,9 @@
 // 存储菜单的构造函数
 const MenuConstructors = {}
 
+import Clear from './clear/index.js'
+MenuConstructors.clear = Clear
+
 import Bold from './bold/index.js'
 MenuConstructors.bold = Bold
 

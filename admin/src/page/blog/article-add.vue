@@ -49,11 +49,20 @@
       ></el-button>
     </div>
 
+    <el-button
+      class="full-screen-btn"
+      type="primary"
+      icon="el-icon-full-screen"
+      @click="isShowEditor=true"
+    >查看/编辑内容</el-button>
+
     <Editor
       :value="content"
       @change="onEditorChange"
       :setup="isSetupEditor"
       @onSave="handleSubmit"
+      :show="isShowEditor"
+      @onClose="isShowEditor=false"
     />
 
     <el-row type="flex" justify="center" class="submit-box">
@@ -85,6 +94,7 @@ export default {
       picture: "",
       loadingStyle: { height: "0" },
       isSetupEditor: false,
+      isShowEditor: false,
     };
   },
   async mounted() {
@@ -245,5 +255,9 @@ export default {
 .submit-box {
   margin: 30px;
   color: white;
+}
+
+.full-screen-btn {
+  margin: 20px;
 }
 </style>

@@ -6,6 +6,7 @@ const config = {
 
     // 默认菜单配置
     menus: [
+        'clear',
         'head',
         'bold',
         'fontSize',
@@ -60,15 +61,13 @@ const config = {
     // },
 
     // 表情
-    emotions: [
-        {
+    emotions: [{
             // tab 的标题
             title: '默认',
             // type -> 'emoji' / 'image'
             type: 'image',
             // content -> 数组
-            content: [
-                {
+            content: [{
                     alt: '[坏笑]',
                     src: 'http://img.t.sinajs.cn/t4/appstyle/expression/ext/normal/50/pcmoren_huaixiao_org.png'
                 },
@@ -88,8 +87,7 @@ const config = {
             // type -> 'emoji' / 'image'
             type: 'image',
             // content -> 数组
-            content: [
-                {
+            content: [{
                     src: 'http://img.t.sinajs.cn/t35/style/images/common/face/ext/normal/7a/shenshou_thumb.gif',
                     alt: '[草泥马]'
                 },
@@ -240,7 +238,7 @@ const config = {
     // customAlert: function (info) {
     //     // 自定义上传提示
     // },
-    
+
     // // 自定义上传图片
     // customUploadImg: function (files, insert) {
     //     // files 是 input 中选中的文件列表

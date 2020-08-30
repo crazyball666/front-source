@@ -392,11 +392,12 @@ Text.prototype = {
 
             // code 中只能粘贴纯文本
             if (nodeName === 'CODE' || nodeName === 'PRE') {
+                let pasteText = getPasteText(e, true)
                 if (pasteTextHandle && isFunction(pasteTextHandle)) {
                     // 用户自定义过滤处理粘贴内容
                     pasteText = '' + (pasteTextHandle(pasteText) || '')
                 }
-                editor.cmd.do('insertHTML', `<p>${pasteText}</p>`)
+                editor.cmd.do('insertHTML', `${pasteText}`)
                 return
             }
 

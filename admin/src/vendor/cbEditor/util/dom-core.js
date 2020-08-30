@@ -189,12 +189,18 @@ DomElement.prototype = {
             // 设置值
             return this.forEach(elem => {
                 elem.setAttribute(key, val)
-            })
+            });
         }
     },
 
+    removeAttr: function (key) {
+        this.forEach(elem => {
+            elem.removeAttribute(key)
+        })
+    },
+
     // 添加 class
-    addClass: function(className) {
+    addClass: function (className) {
         if (!className) {
             return this
         }
@@ -311,7 +317,7 @@ DomElement.prototype = {
     },
 
     // 增加子节点
-    append: function($children) {
+    append: function ($children) {
         return this.forEach(elem => {
             $children.forEach(child => {
                 elem.appendChild(child)
@@ -341,7 +347,7 @@ DomElement.prototype = {
     // 尺寸数据
     getSizeData: function () {
         const elem = this[0]
-        return elem.getBoundingClientRect()  // 可得到 bottom height left right top width 的数据
+        return elem.getBoundingClientRect() // 可得到 bottom height left right top width 的数据
     },
 
     // 封装 nodeName
