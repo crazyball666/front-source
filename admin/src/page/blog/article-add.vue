@@ -9,12 +9,7 @@
     <div class="item-box">
       <span>标签:</span>
       <el-select v-model="tags" placeholder="请选择标签" class="item-input" multiple>
-        <el-option
-          v-for="item in tagList"
-          :key="item.p_id"
-          :label="item.content"
-          :value="item.p_id"
-        ></el-option>
+        <el-option v-for="item in tagList" :key="item.pid" :label="item.content" :value="item.pid"></el-option>
       </el-select>
     </div>
     <div class="item-box">
@@ -107,16 +102,16 @@ export default {
       try {
         this.pid = this.$route.params.pid;
         let res = await blogApi.getArticle(this.$route.params.pid);
-        if (res.code == 200) {
+        if (res.code == 1000) {
           this.title = res.data.title;
           this.summary = res.data.summary;
           this.content = res.data.content;
           // this.editor.txt.html(this.content);
           this.picture = res.data.picture;
-          let articleTags = res.data.tags.split(",");
+          let articleTags = res.data.tags.map((e) => e.content);
           this.tagList.forEach((tag) => {
             if (articleTags.includes(tag.content)) {
-              this.tags.push(tag.p_id);
+              this.tags.push(tag.pid);
             }
           });
         }

@@ -1,0 +1,68 @@
+//  @import "./components/vars.scss";
+//  @import "./components/header.scss";
+@import "./components/sidebar.scss";
+@import "./components/tags.scss";
+@import "./pages/archive/archive.scss";
+@import "./pages/about/about.scss";
+
+a {
+  color: #333;
+  text-decoration: none;
+}
+
+p {
+  margin: 0px;
+}
+
+body {
+  background: #f5f5f5;
+  font-size: 14px;
+  color: #333;
+  font-family: -apple-system,
+    BlinkMacSystemFont,
+    segoe ui,
+    Roboto,
+    Oxygen,
+    Ubuntu,
+    Cantarell,
+    open sans,
+    helvetica neue,
+    sans-serif;
+}
+
+.layout {
+  max-width: 1024px;
+  padding-top: 30px;
+  width: 100%;
+  margin: 0px auto;
+  display: flex;
+  animation: showContainer 0.5s ease;
+
+  .sidebar {
+    width: 240px;
+    background: white;
+    height: max-content;
+  }
+
+  .container {
+    margin-left: 15px;
+    flex: 1;
+    height: max-content;
+    //  box-shadow: #666 0 0 5px -2px;
+    //  background: white;
+    //  overflow-x: hidden;
+  }
+}
+
+
+@keyframes showContainer {
+  0% {
+    opacity: 0;
+    transform: translateX(60px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateX(0px);
+  }
+}

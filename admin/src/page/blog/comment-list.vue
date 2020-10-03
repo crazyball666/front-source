@@ -1,10 +1,12 @@
 <template>
   <div class="tag-list">
-    <h1 class="title">标签列表</h1>
-    <el-row type="flex" class="add-btn-row" justify="end">
-      <el-button type="primary" @click="handleAddTag">新增标签</el-button>
-    </el-row>
-    <el-table :data="tagList" empty-text="暂无数据" border v-loading="loading">
+    <h1 class="title">评论列表</h1>
+    <el-table
+      :data="commentList"
+      empty-text="暂无数据"
+      border
+      v-loading="loading"
+    >
       <el-table-column
         prop="pid"
         label="ID"
@@ -13,23 +15,47 @@
         width="150"
       ></el-table-column>
       <el-table-column
-        prop="content"
-        label="标签"
+        prop="article"
+        label="文章"
         align="center"
         class-name="column-content"
       ></el-table-column>
       <el-table-column
-        prop="article_count"
-        label="文章数"
+        prop="nick_name"
+        label="名称"
+        align="center"
+        class-name="column-content"
+      ></el-table-column>
+      <el-table-column
+        prop="content"
+        label="评论内容"
+        align="center"
+        class-name="column-content"
+      ></el-table-column>
+      <el-table-column
+        prop="email"
+        label="邮箱"
         align="center"
         class-name="column-content"
       ></el-table-column>
       <el-table-column
         prop="created_at"
-        label="创建时间"
+        label="评论时间"
         align="center"
         class-name="column-content"
       ></el-table-column>
+      <el-table-column
+        prop="status"
+        label="状态"
+        align="center"
+        class-name="column-content"
+      >
+        <template slot-scope="scope">
+          <el-tag :type="scope.row.status == 0 ? 'danger' : 'success'">{{
+            scope.row.status == 0 ? "未显示" : "已显示"
+          }}</el-tag>
+        </template>
+      </el-table-column>
       <el-table-column
         prop
         label="操作"
@@ -39,10 +65,20 @@
       >
         <template slot-scope="scope">
           <el-button
-            @click="handleUpdate(scope.row.pid, scope.row.content)"
+            @click="handleShow(scope.row.pid)"
+            v-if="scope.row.status != 1"
             type="text"
             size="small"
-            >修改</el-button
+            class="showBtn"
+            >显示</el-button
+          >
+          <el-button
+            @click="handleHide(scope.row.pid)"
+            v-if="scope.row.status != 0"
+            type="text"
+            size="small"
+            class="hideBtn"
+            >隐藏</el-button
           >
           <el-button
             @click="handleDelete(scope.row.pid)"
@@ -58,7 +94,7 @@
       class="pagination"
       background
       layout="prev, pager, next"
-      :total="tagCount"
+      :total="commentCount"
       :current-page="currentPage"
       @current-change="pageDidChange"
     ></el-pagination>
@@ -67,12 +103,13 @@
 
 <script>
 import blogApi from "../../api/blog";
+
 export default {
   data: () => {
     return {
       loading: false,
-      tagList: [],
-      tagCount: 0,
+      commentList: [],
+      commentCount: 0,
       currentPage: 1,
     };
   },
@@ -84,9 +121,9 @@ export default {
   methods: {
     updateList: async function () {
       this.loading = true;
-      let res = await blogApi.getTagList(this.currentPage - 1, 10);
-      this.tagList = res.data.tags;
-      this.tagCount = res.data.count;
+      let res = await blogApi.getCommentList(this.currentPage - 1, 10);
+      this.commentList = res.data.comments;
+      this.commentCount = res.data.count;
       this.loading = false;
     },
     //handle
@@ -94,7 +131,39 @@ export default {
       this.currentPage = page;
       await this.updateList();
     },
-    handleDelete: function (pid) {
+    handleShow: async function (pid) {
+      this.loading = true;
+      blogApi
+        .showComment(pid)
+        .then(() => this.updateList())
+        .then((res) => {
+          this.$message({
+            type: "success",
+            message: "显示成功!",
+          });
+          this.loading = false;
+        })
+        .catch(() => {
+          this.loading = false;
+        });
+    },
+    handleHide: async function (pid) {
+      this.loading = true;
+      blogApi
+        .hideComment(pid)
+        .then(() => this.updateList())
+        .then((res) => {
+          this.$message({
+            type: "success",
+            message: "隐藏成功!",
+          });
+          this.loading = false;
+        })
+        .catch(() => {
+          this.loading = false;
+        });
+    },
+    handleDelete: async function (pid) {
       this.$confirm("是否删除该标签?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
@@ -102,63 +171,14 @@ export default {
       })
         .then(() => {
           this.loading = true;
-          return blogApi.deleteTag(pid);
+          return blogApi.deleteComment(pid);
         })
+        .then(() => this.updateList())
         .then((res) => {
           this.$message({
             type: "success",
             message: "删除成功!",
           });
-          return this.updateList();
-        })
-        .then(() => {
-          this.loading = false;
-        })
-        .catch(() => {
-          this.loading = false;
-        });
-    },
-    handleAddTag: function () {
-      this.$prompt("请输入新标签", "提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-      })
-        .then(({ value }) => {
-          this.loading = true;
-          return blogApi.createTag({ content: value });
-        })
-        .then((data) => {
-          this.$message({
-            type: "success",
-            message: "创建成功",
-          });
-          return this.updateList();
-        })
-        .then(() => {
-          this.loading = false;
-        })
-        .catch(() => {
-          this.loading = false;
-        });
-    },
-    handleUpdate: function (pid, oldValue) {
-      this.$prompt("修改标签", "提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        inputValue: oldValue,
-      })
-        .then(({ value }) => {
-          this.loading = true;
-          return blogApi.updateTag(pid, value);
-        })
-        .then((data) => {
-          this.$message({
-            type: "success",
-            message: "修改成功",
-          });
-          return this.updateList();
-        })
-        .then(() => {
           this.loading = false;
         })
         .catch(() => {
@@ -169,7 +189,7 @@ export default {
 };
 </script>
 
-<style lang='scss' scoped>
+<style lang="scss" scoped>
 .title {
   font-size: 20px;
   margin-bottom: 20px;
@@ -177,13 +197,22 @@ export default {
 .pagination {
   margin: 20px auto;
 }
-.add-btn-row {
-  margin-bottom: 20px;
-}
 .deleteBtn {
   color: #f56c6c;
   &:hover {
     color: #ff3333;
+  }
+}
+.showBtn {
+  color: #33cc99;
+  &:hover {
+    color: #66ddbb;
+  }
+}
+.hideBtn {
+  color: #666;
+  &:hover {
+    color: #999;
   }
 }
 </style>

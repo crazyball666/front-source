@@ -6,11 +6,10 @@ export default {
   setupAjax() {
     axios.interceptors.response.use(res => {
       const data = res.data;
-      if (!data || (data.code && data.code != 200)) {
-        Message({
+      if (!data || (data.code && data.code != 200 && data.code != 1000)) {
+        mdui.snackbar({
           message: `Error${data.code && `(${data.code})`} : ${data.message || '未知错误'}`,
-          center: true,
-          type: 'error'
+          position: "right-top",
         });
         let err = new Error();
         err.code = data.code || 500;
@@ -69,12 +68,15 @@ export default {
     })
   },
 
+  // 获取评论列表
   async getCommentList(articleId, page = 0) {
     let res = await axios.get(`${blogHost}/comment/article/${articleId}?page=${page}`);
     return res;
   },
+
+  // 添加评论
   async addComment(articleId, nickName, email, content) {
-    let res = await axios.post(`${blogHost}/comment`, {
+    let res = await axios.post(`${blogHost}/comment/create`, {
       articleId,
       nickName,
       email,

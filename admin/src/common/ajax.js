@@ -9,7 +9,7 @@ axios.defaults.headers.common['access_token'] = token;
 
 axios.interceptors.response.use((response) => {
   const data = response.data;
-  if (!data || (data.code && data.code != 200)) {
+  if (!data || (data.code && data.code != 200 && data.code != 1000)) {
     Message({
       message: `Error${data.code && `(${data.code})`} : ${data.message || '未知错误'}`,
       center: true,

@@ -1,8 +1,16 @@
 .archive {
-  padding: 30px;
+  padding: 24px 36px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0px 0px 6px -3px #333;
+
+  h1 {
+    margin-top: 10px;
+    margin-bottom: 26px;
+  }
 
   .articles-group {
-    margin-bottom: 30px;
+    margin-bottom: 40px;
   }
 
   .group-key {
@@ -36,7 +44,7 @@
     }
 
     a:hover {
-      color: #3366aa;
+      color: #666;
       display: inline-block;
       height: 100%;
       line-height: 100%;

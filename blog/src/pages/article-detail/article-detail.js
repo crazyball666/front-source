@@ -1,10 +1,12 @@
 import "./article-detail.scss"
 import "./markdown.css"
+import api from "../../common/api"
 
 let commentPage = 0;
 let loadCommentCount = 0;
 let articleId = null;
 
+// 模块主入口
 export default async function setupModule() {
   articleId = location.pathname.replace("/t/", "");
 
@@ -14,20 +16,23 @@ export default async function setupModule() {
   let content = $(".content").text();
   $(".content").html(content);
 
+  // 代码高亮
   document.querySelectorAll('.w-e-text pre code').forEach((block) => {
     hljs.highlightBlock(block);
   });
 
+  // 加载评论
   loadComment(articleId, commentPage)
 }
 
 /**
- * 添加评论
+ * 添加评论模版
  */
-function addCommentTpl(name, content, parentId, parentName, parentContent, prepend = false) {
+function addCommentTpl(name, content, parentId, parentName, parentContent, time, prepend = false) {
   let newTpl = $($("#comment-tpl").html());
   newTpl.find(".comment-name").text((name && name.length > 0 ? name : "游客") + ":");
   newTpl.find(".comment-content").text(content);
+  newTpl.find(".comment-time").text(time)
   if (parentId && parentId.length > 0) {
     newTpl.find(".parent-comment-name").text((parentName && parentName.length > 0 ? parentName : "游客") + ":");
     newTpl.find(".parent-comment-content").text(parentContent);
@@ -54,16 +59,19 @@ function setCommentTips(tips) {
 async function loadComment(articleId, commentPage) {
   let commentRes;
   try {
-    setCommentTips("加载中...")
+    setCommentTips("加载中...");
+    $(".loading-bar").show();
     commentRes = await api.getCommentList(articleId, commentPage);
+    $(".loading-bar").hide();
     loadCommentCount += commentRes.data.comments.length;
     commentRes.data.comments.forEach(comment => {
-      addCommentTpl(comment.nick_name, comment.content, comment.parent_id, comment.parent_name, comment.parent_content)
+      addCommentTpl(comment.nick_name, comment.content, comment.parent_id, comment.parent_name, comment.parent_content, comment.created_at)
     });
     let h = document.querySelector('.comment-list').scrollHeight
     $(".comment-list").css("max-height", h + "px")
   } catch (err) {
-
+    console.log(err)
+    $(".loading-bar").hide();
   }
   if (loadCommentCount == 0) {
     setCommentTips("暂无评论")
@@ -109,9 +117,12 @@ async function addComment() {
       loadCommentCount = 0;
       loadComment(articleId, commentPage)
       mdui.snackbar({
-        message: "Success",
+        message: "评论成功",
         position: "right-top",
       });
+      $(".name-input").val("")
+      $(".email-input").val("")
+      $(".comment-input").val("")
     }
   } catch (err) {
     mdui.snackbar({

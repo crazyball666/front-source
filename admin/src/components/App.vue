@@ -7,12 +7,12 @@
       />
       <el-dropdown class="user-name">
         <span>
-          欢迎，{{name}}
+          欢迎，{{ name }}
           <i class="el-icon-arrow-down el-icon--right"></i>
         </span>
         <el-dropdown-menu slot="dropdown" class="popover">
-          <el-dropdown-item>ID：{{userId}}</el-dropdown-item>
-          <el-dropdown-item>角色：{{roles ? roles : "无"}}</el-dropdown-item>
+          <el-dropdown-item>ID：{{ userId }}</el-dropdown-item>
+          <el-dropdown-item>角色：{{ roles ? roles : "无" }}</el-dropdown-item>
           <el-dropdown-item divided>
             <el-button type="text" round @click="logout">登出</el-button>
           </el-dropdown-item>
@@ -32,6 +32,8 @@
             <span slot="title">Blog系统</span>
             <el-menu-item index="1-1">文章管理</el-menu-item>
             <el-menu-item index="1-2">标签管理</el-menu-item>
+            <el-menu-item index="1-3">评论管理</el-menu-item>
+            <el-menu-item index="1-4">Blog设置</el-menu-item>
           </el-submenu>
           <el-submenu index="2">
             <span slot="title">User系统</span>
@@ -73,6 +75,12 @@ export default {
       } else if (key == "1-2") {
         this.$route.path != "/blog/tag-list" &&
           this.$router.push("/blog/tag-list");
+      } else if (key == "1-3") {
+        this.$route.path != "/blog/comment-list" &&
+          this.$router.push("/blog/comment-list");
+      } else if (key == "1-4") {
+        this.$route.path != "/blog/setting" &&
+          this.$router.push("/blog/setting");
       } else if (key == "2-1") {
         this.$route.path != "/user/user-list" &&
           this.$router.push("/user/user-list");
