@@ -27,23 +27,20 @@
           background-color="#666"
           text-color="#fff"
           active-text-color="#ffd04b"
+          :default-active="this.$route.path"
         >
-          <el-submenu index="1">
-            <span slot="title">Blog系统</span>
-            <el-menu-item index="1-1">文章管理</el-menu-item>
-            <el-menu-item index="1-2">标签管理</el-menu-item>
-            <el-menu-item index="1-3">评论管理</el-menu-item>
-            <el-menu-item index="1-4">Blog设置</el-menu-item>
-          </el-submenu>
-          <el-submenu index="2">
-            <span slot="title">User系统</span>
-            <el-menu-item index="2-1">用户管理</el-menu-item>
-            <el-menu-item index="2-2">角色管理</el-menu-item>
-            <el-menu-item index="2-3">权限管理</el-menu-item>
-          </el-submenu>
-          <el-submenu index="3">
-            <span slot="title">Service系统</span>
-            <el-menu-item index="3-1">自动部署</el-menu-item>
+          <el-submenu
+            v-for="system in menu"
+            :key="system.url"
+            :index="system.url"
+          >
+            <span slot="title">{{ system.title }}</span>
+            <el-menu-item
+              v-for="item in system.items"
+              :key="item.url"
+              :index="system.url + item.url"
+              >{{ item.title }}</el-menu-item
+            >
           </el-submenu>
         </el-menu>
       </div>
@@ -62,6 +59,68 @@ export default {
   data() {
     return {
       showPop: false,
+      menu: [
+        {
+          title: "Blog系统",
+          url: "/blog",
+          items: [
+            {
+              title: "文章管理",
+              url: "/article-list",
+            },
+            {
+              title: "标签管理",
+              url: "/tag-list",
+            },
+            {
+              title: "评论管理",
+              url: "/comment-list",
+            },
+            {
+              title: "Blog设置",
+              url: "/setting",
+            },
+          ],
+        },
+        {
+          title: "User系统",
+          url: "/user",
+          items: [
+            {
+              title: "用户管理",
+              url: "/user-list",
+            },
+            {
+              title: "角色管理",
+              url: "/role-list",
+            },
+            {
+              title: "权限管理",
+              url: "/power-list",
+            },
+          ],
+        },
+        {
+          title: "Service系统",
+          url: "/service",
+          items: [
+            {
+              title: "自动部署",
+              url: "/depoly-manager",
+            },
+          ],
+        },
+        {
+          title: "Service-go系统",
+          url: "/service-go",
+          items: [
+            {
+              title: "CB APP",
+              url: "/cbapp",
+            },
+          ],
+        },
+      ],
     };
   },
   computed: {
@@ -69,30 +128,8 @@ export default {
   },
   methods: {
     handleSelect(key, keyPath) {
-      if (key == "1-1") {
-        this.$route.path != "/blog/article-list" &&
-          this.$router.push("/blog/article-list");
-      } else if (key == "1-2") {
-        this.$route.path != "/blog/tag-list" &&
-          this.$router.push("/blog/tag-list");
-      } else if (key == "1-3") {
-        this.$route.path != "/blog/comment-list" &&
-          this.$router.push("/blog/comment-list");
-      } else if (key == "1-4") {
-        this.$route.path != "/blog/setting" &&
-          this.$router.push("/blog/setting");
-      } else if (key == "2-1") {
-        this.$route.path != "/user/user-list" &&
-          this.$router.push("/user/user-list");
-      } else if (key == "2-2") {
-        this.$route.path != "/user/role-list" &&
-          this.$router.push("/user/role-list");
-      } else if (key == "2-3") {
-        this.$route.path != "/user/power-list" &&
-          this.$router.push("/user/power-list");
-      } else if (key == "3-1") {
-        this.$route.path != "/service/depoly-manager" &&
-          this.$router.push("/service/depoly-manager");
+      if (this.$route.path != key) {
+        this.$router.push(key);
       }
     },
     logout: async function () {
@@ -169,6 +206,6 @@ export default {
   padding: 30px 50px 0;
   box-sizing: border-box;
   background: white;
-  overflow: scroll;
+  overflow: auto;
 }
 </style>

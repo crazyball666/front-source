@@ -54,5 +54,24 @@ export default new Router({
       name: 'depolyManager',
       component: () => import('../page/service/depoly-manager.vue'),
     },
+    {
+      path: '/service-go/cbapp',
+      name: 'cbapp',
+      component: () => import('../page/service-go/cbapp/index.vue'),
+      children: [
+        {
+          path: '',
+          redirect:'user',
+        },
+        {
+          path: 'user',
+          component:()=>import('../page/service-go/cbapp/user.vue'),
+        },
+        {
+          path: 'logs',
+          component:()=>import('../page/service-go/cbapp/logs.vue'),
+        }
+      ]
+    }
   ]
 })

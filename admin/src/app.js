@@ -7,14 +7,14 @@ import router from "./common/router"
 import store from "./store/index"
 import types from "./store/mutation-type"
 
+
 document.addEventListener(
   'DOMContentLoaded',
   () => {
     let accessToken = localStorage.getItem("access_token")
     let user = JSON.parse(localStorage.getItem("userInfo"))
     if (!user || !accessToken) {
-      // location.href = "//user.crazyball.xyz/login?redirectURL=http://localhost:9001/verify?orginURL=http://localhost:9001/"
-      location.href = "//user.crazyball.xyz/login?redirectURL=https://admin.crazyball.xyz/verify?orginURL=https://admin.crazyball.xyz/"
+      location.href = `//user.crazyball.xyz/login?redirectURL=${location.protocol}//${location.host}/verify?orginURL=${location.protocol}//${location.host}/`
       return
     }
     store.commit(types.UPDATE_USER, user)
