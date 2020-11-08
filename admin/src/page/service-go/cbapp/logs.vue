@@ -3,7 +3,7 @@
     <div class="search-bar">
       <el-input v-model="search" placeholder="搜索日志" class="input-box">
       </el-input>
-      <el-button type="primary" icon="el-icon-search" @click="updateList"
+      <el-button type="primary" icon="el-icon-search" @click="searchLog"
         >搜索</el-button
       >
     </div>
@@ -97,6 +97,10 @@ export default {
     },
     pageDidChange: async function (page) {
       this.currentPage = page;
+      await this.updateList();
+    },
+    searchLog: async function () {
+      this.currentPage = 1;
       await this.updateList();
     },
   },
