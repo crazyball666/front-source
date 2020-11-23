@@ -1,15 +1,34 @@
 <template>
   <div class="article-add">
-    <div v-loading="loadingArticle" class="loading-mask" v-show="loadingArticle"></div>
+    <div
+      v-loading="loadingArticle"
+      class="loading-mask"
+      v-show="loadingArticle"
+    ></div>
     <h1 class="title">新增文章</h1>
     <div class="item-box">
       <span>标题:</span>
-      <el-input placeholder="请输入标题" v-model="title" class="item-input" clearable></el-input>
+      <el-input
+        placeholder="请输入标题"
+        v-model="title"
+        class="item-input"
+        clearable
+      ></el-input>
     </div>
     <div class="item-box">
       <span>标签:</span>
-      <el-select v-model="tags" placeholder="请选择标签" class="item-input" multiple>
-        <el-option v-for="item in tagList" :key="item.pid" :label="item.content" :value="item.pid"></el-option>
+      <el-select
+        v-model="tags"
+        placeholder="请选择标签"
+        class="item-input"
+        multiple
+      >
+        <el-option
+          v-for="item in tagList"
+          :key="item.pid"
+          :label="item.content"
+          :value="item.pid"
+        ></el-option>
       </el-select>
     </div>
     <div class="item-box">
@@ -25,11 +44,16 @@
     </div>
     <div class="item-box">
       <span>封面:</span>
-      <el-upload class="img-uploader" action :http-request="uploadImg" :show-file-list="false">
+      <el-upload
+        class="img-uploader"
+        action
+        :http-request="uploadImg"
+        :show-file-list="false"
+      >
         <div v-if="!picture">
-          <div
-            class="img-uploader-icon"
-          >{{parseInt(loadingStyle.height) > 0 ?loadingStyle.height : "+"}}</div>
+          <div class="img-uploader-icon">
+            {{ parseInt(loadingStyle.height) > 0 ? loadingStyle.height : "+" }}
+          </div>
           <div class="upload-progress" :style="loadingStyle"></div>
         </div>
         <img v-else :src="picture" alt class="img" />
@@ -40,7 +64,7 @@
         circle
         class="delete-btn"
         size="mini"
-        @click="picture=null"
+        @click="picture = null"
       ></el-button>
     </div>
 
@@ -48,8 +72,9 @@
       class="full-screen-btn"
       type="primary"
       icon="el-icon-full-screen"
-      @click="isShowEditor=true"
-    >查看/编辑内容</el-button>
+      @click="isShowEditor = true"
+      >查看/编辑内容</el-button
+    >
 
     <Editor
       :value="content"
@@ -57,11 +82,13 @@
       :setup="isSetupEditor"
       @onSave="handleSubmit"
       :show="isShowEditor"
-      @onClose="isShowEditor=false"
+      @onClose="isShowEditor = false"
     />
 
     <el-row type="flex" justify="center" class="submit-box">
-      <el-button type="primary" round @click="handleSubmit" :loading="loading">保存</el-button>
+      <el-button type="primary" round @click="handleSubmit" :loading="loading"
+        >保存</el-button
+      >
     </el-row>
   </div>
 </template>
@@ -170,7 +197,7 @@ export default {
           this.loadingStyle.height = progress + "%";
         })
         .then((res) => {
-          if (res.code == 200) {
+          if (res.code == 1000) {
             Message.success("上传成功");
             this.picture = "//" + res.data[0];
           }
