@@ -1,6 +1,10 @@
 <template>
   <div
-    :class="[`editor-warp`,`fullScreen`,closeAnimation?`closeAnimation`:``]"
+    :class="[
+      `editor-warp`,
+      `fullScreen`,
+      closeAnimation ? `closeAnimation` : ``,
+    ]"
     @keydown.esc="onClose"
     v-show="show"
   >
@@ -75,7 +79,7 @@ export default {
           })
           .then((res) => {
             this.editorUploadProgress = 0;
-            if (res.code == 200) {
+            if (res.code == 1000) {
               Message.success("上传成功");
               res.data.forEach((item) => {
                 insert(`//${item}`);
