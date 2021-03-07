@@ -23,6 +23,7 @@ export default {
       menu: [
         { title: "用户管理", url: "/service-go/cbapp/user" },
         { title: "日志查询", url: "/service-go/cbapp/logs" },
+        { title: "菜单管理", url: "/service-go/cbapp/menu" },
       ],
     };
   },

@@ -98,6 +98,10 @@ export default {
               title: "权限管理",
               url: "/power-list",
             },
+            {
+              title: "接口权鉴管理",
+              url: "/verify-list",
+            },
           ],
         },
         {
