@@ -4,8 +4,8 @@
 
 import ajax from "../common/ajax";
 
-const USER_BASE = "http://localhost:8001";
-// const USER_BASE = 'https://user.crazyball.xyz';
+// const USER_BASE = "http://localhost:8001";
+const USER_BASE = "https://user.crazyball.xyz";
 
 export default {
   // 用户相关
