@@ -11,12 +11,12 @@ document.addEventListener(
   "DOMContentLoaded",
   () => {
     let accessToken = localStorage.getItem("access_token");
-    let user = JSON.parse(localStorage.getItem("userInfo"));
-    if (!user || !accessToken) {
-      location.href = `https://user.crazyball.xyz/login?redirectURL=${location.protocol}//${location.host}/verify?orginURL=${location.protocol}//${location.host}/`;
-      return;
-    }
-    store.commit(types.UPDATE_USER, user);
+    // let user = JSON.parse(localStorage.getItem("userInfo"));
+    // if (!accessToken) {
+    //   location.href = `http://localhost:8001/login?redirectURL=${location.protocol}//${location.host}/verify?orginURL=${location.protocol}//${location.host}/`;
+    //   return;
+    // }
+    // store.commit(types.UPDATE_USER, user);
     Vue.use(ElementUI);
     new Vue({
       router,

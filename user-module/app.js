@@ -114,13 +114,14 @@ function startLogin() {
     success: function (data) {
       if (data.code == 1000) {
         let redirectURL = decodeURIComponent(getQuery("redirectURL"));
+        let originUrl = decodeURIComponent(getQuery("originUrl"));
         if (!redirectURL) {
           particles.integrate();
           return showError("no redirect url");
         }
-        redirectURL += `&access_token=${encodeURIComponent(
-          data.data.access_token
-        )}`;
+        redirectURL += `?originUrl=${encodeURIComponent(
+          originUrl
+        )}&access_token=${encodeURIComponent(data.data.access_token)}`;
         location.href = redirectURL;
       } else {
         particles.integrate();
