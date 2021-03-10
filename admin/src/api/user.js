@@ -136,4 +136,8 @@ export default {
     let res = await ajax.delete(USER_BASE + `/verify_rule/${id}`);
     return res;
   },
+  async refreshVerifyCache(app) {
+    let res = await ajax.get(USER_BASE + `/verify/refresh_cache?app=${app}`);
+    return res;
+  },
 };

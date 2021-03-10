@@ -2,6 +2,9 @@
   <div class="verify-list">
     <h1 class="title">权鉴管理</h1>
     <el-row type="flex" class="add-btn-row" justify="end">
+      <el-button type="primary" @click="showRefreshDialog = true"
+        >刷新缓存</el-button
+      >
       <el-button type="primary" @click="handleShowDialog(1, null)"
         >新增权鉴</el-button
       >
@@ -82,7 +85,11 @@
             <el-input v-model="dialogForm.method"></el-input>
           </el-form-item>
           <el-form-item label="路径">
-            <el-input v-model="dialogForm.path"></el-input>
+            <el-input
+              v-model="dialogForm.path"
+              type="textarea"
+              :rows="5"
+            ></el-input>
           </el-form-item>
         </el-form>
         <div v-if="dialogForm.id" style="margin-top: 50px; padding: 0 30px">
@@ -189,6 +196,30 @@
         >
       </div>
     </el-dialog>
+
+    <!-- 刷新缓存 -->
+    <el-dialog
+      title="刷新缓存"
+      :visible="showRefreshDialog"
+      width="750px"
+      :center="true"
+      @close="showRefreshDialog = false"
+    >
+      <el-form label-width="100px" v-loading="loadingRefresh">
+        <el-form-item label="App:">
+          <el-input v-model="refreshApp"></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button
+          type="primary"
+          @click="onSubmitRefresh"
+          :loading="loadingRefresh"
+          round
+          >确 定</el-button
+        >
+      </div>
+    </el-dialog>
   </div>
 </template>
 
@@ -228,6 +259,10 @@ export default {
         type: null,
         value: "",
       },
+      //缓存
+      showRefreshDialog: false,
+      refreshApp: "",
+      loadingRefresh: false,
     };
   },
   async mounted() {
@@ -250,7 +285,7 @@ export default {
     },
 
     handleDelete: function (id) {
-      this.$confirm("是否删除该角色?", "提示", {
+      this.$confirm("是否删除该记录?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning",
@@ -394,10 +429,25 @@ export default {
           this.loadingDialog = true;
           this.getVerifyDetail(this.dialogForm.id);
         })
-        .then(() => {
+        .catch(() => {
           this.loadingDialog = false;
+        });
+    },
+    onSubmitRefresh: async function () {
+      this.loadingRefresh = true;
+      userApi
+        .refreshVerifyCache(this.refreshApp)
+        .then((res) => {
+          this.$message({
+            type: "success",
+            message: "刷新成功!",
+          });
+          this.loadingRefresh = false;
+          this.showRefreshDialog = false;
         })
-        .catch(() => {});
+        .catch((err) => {
+          this.loadingRefresh = false;
+        });
     },
   },
 };
