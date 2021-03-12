@@ -82,20 +82,21 @@
 .w-e-text table {
   border-top: 1px solid #ccc;
   border-left: 1px solid #ccc;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .w-e-text table td,
 .w-e-text table th {
   border-bottom: 1px solid #ccc;
   border-right: 1px solid #ccc;
-  padding: 3px 5px;
+  text-align: center;
 }
 
 .w-e-text table th {
   font-weight: bold;
   background: #d0e5f2;
   border-bottom: 2px solid #ccc;
-  text-align: center;
 }
 
 .w-e-text:focus {

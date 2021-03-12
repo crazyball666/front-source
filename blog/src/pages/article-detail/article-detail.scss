@@ -5,13 +5,11 @@
   border-radius: 8px;
   box-shadow: 0px 0px 6px -3px #333;
 
-
   .title {
     font-size: 26px;
     margin-bottom: 10px;
     border-left: 8px solid #666;
-    padding-left: 8px;
-    line-height: 50px;
+    padding: 10px 0px 10px 8px;
   }
 
   .tag-item {
@@ -58,7 +56,6 @@
     //   border-bottom: 1px solid #ccc;
 
     // }
-
 
     .comment-input {
       box-sizing: border-box;
@@ -138,6 +135,26 @@
       cursor: pointer;
       color: #399;
       font-weight: bold;
+    }
+  }
+}
+
+@media all and (max-width: 1024px) {
+  .article-detail {
+    padding: 10px;
+
+    .title {
+      margin-bottom: 16px;
+    }
+
+    .add-comment-box {
+      margin: 60px 0 20px;
+      overflow: hidden;
+
+      .add-comment-title {
+        text-align: center;
+        color: #999;
+      }
     }
   }
 }

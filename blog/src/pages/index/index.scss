@@ -1,15 +1,16 @@
 // 文章列表
 .articles {
-
   .article-item {
     background: #fff;
     border-radius: 8px;
     box-sizing: border-box;
-    padding: 24px;
-    margin-bottom: 30px;
+    padding: 24px 24px 12px;
     transition: all 0.4s ease;
     position: relative;
     box-shadow: 0px 0px 6px -3px #333;
+    &:not(:last-child) {
+      margin-bottom: 30px;
+    }
   }
 
   .title {
@@ -25,7 +26,7 @@
     background-size: cover;
     background-position: center;
     width: 100%;
-    height: 240px;
+    height: 250px;
     transition: all 0.4s ease;
     margin-bottom: 10px;
     overflow: hidden;
@@ -58,23 +59,26 @@
     margin-bottom: 5px;
   }
 
-  .date {
-    color: #666;
-    font-style: italic;
-    margin: 3px 0;
-  }
+  .item-footer {
+    overflow: hidden;
 
-  .read-btn {
-    position: absolute;
-    display: block;
-    padding: 10px 16px;
-    bottom: 25px;
-    right: 24px;
-    color: #eee;
-    background: #333;
-    border-radius: 3px;
-    font-size: 12px;
-    cursor: pointer;
+    .date {
+      float: left;
+      color: #666;
+      font-style: italic;
+      margin: 3px 0;
+      padding: 10px 0;
+    }
+
+    .read-btn {
+      float: right;
+      padding: 10px 16px;
+      color: #eee;
+      background: #333;
+      border-radius: 3px;
+      font-size: 12px;
+      cursor: pointer;
+    }
   }
 }
 
@@ -95,16 +99,33 @@
     margin: 0 10px;
   }
 
-  // .pre-btn {
-  //   float: left;
-  // }
-
-  // .next-btn {
-  //   float: right;
-  // }
-
   .selected {
     background: #666;
     color: #eee;
+  }
+}
+
+@media all and (max-width: 1024px) {
+  .articles {
+    .article-item {
+      padding: 12px 12px 6px;
+      &:not(:last-child) {
+        margin-bottom: 15px;
+      }
+    }
+
+    .summary {
+      height: 150px;
+    }
+
+    .tag-list {
+      margin-bottom: 5px;
+    }
+
+    .item-footer {
+      .read-btn {
+        padding: 8px 12px;
+      }
+    }
   }
 }

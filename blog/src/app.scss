@@ -18,16 +18,8 @@ body {
   background: #f5f5f5;
   font-size: 14px;
   color: #333;
-  font-family: -apple-system,
-    BlinkMacSystemFont,
-    segoe ui,
-    Roboto,
-    Oxygen,
-    Ubuntu,
-    Cantarell,
-    open sans,
-    helvetica neue,
-    sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, segoe ui, Roboto, Oxygen,
+    Ubuntu, Cantarell, open sans, helvetica neue, sans-serif;
 }
 
 .layout {
@@ -35,23 +27,36 @@ body {
   padding: 30px 0;
   width: 100%;
   margin: 0px auto;
-  display: flex;
+  box-sizing: border-box;
   animation: showContainer 0.5s ease;
 
-  .sidebar {
-    width: 240px;
-    background: white;
-    height: max-content;
+  .top-layout {
+    display: flex;
+
+    .sidebar {
+      width: 240px;
+      background: white;
+      height: max-content;
+      margin-right: 15px;
+    }
+    .container {
+      flex: 1;
+      height: max-content;
+      max-width: 100%;
+      overflow: hidden;
+    }
   }
 
-  .container {
-    margin-left: 15px;
-    flex: 1;
-    height: max-content;
-    width: 769px;
+  .footer {
+    text-align: right;
+    margin: 30px 0;
+
+    a {
+      color: cornflowerblue;
+      font-size: 12px;
+    }
   }
 }
-
 
 @keyframes showContainer {
   0% {
@@ -62,5 +67,21 @@ body {
   100% {
     opacity: 1;
     transform: translateX(0px);
+  }
+}
+
+@media all and (max-width: 1024px) {
+  body {
+    font-size: 12px;
+  }
+  .layout {
+    padding: 10px;
+    .sidebar {
+      display: none;
+    }
+    .footer {
+      text-align: center;
+      margin: 30px 0;
+    }
   }
 }
