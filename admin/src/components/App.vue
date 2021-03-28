@@ -122,6 +122,10 @@ export default {
               title: "CB APP",
               url: "/cbapp",
             },
+            {
+              title: "动态配置系统",
+              url: "/config",
+            },
           ],
         },
       ],

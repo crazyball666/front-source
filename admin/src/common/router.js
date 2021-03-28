@@ -83,5 +83,38 @@ export default new Router({
         },
       ],
     },
+    {
+      path: "/service-go/config",
+      name: "动态配置系统",
+      component: () => import("../page/service-go/config/index.vue"),
+      children: [
+        {
+          path: "",
+          redirect: "moduleList",
+        },
+        {
+          path: "moduleList",
+          name: "模块列表",
+          component: () => import("../page/service-go/config/module-list.vue"),
+        },
+        {
+          path: "module/:id",
+          name: "模块详情",
+          component: () =>
+            import("../page/service-go/config/module-detail.vue"),
+        },
+        {
+          path: "module/:id/*",
+          name: "模块详情",
+          component: () =>
+            import("../page/service-go/config/module-detail.vue"),
+        },
+        {
+          path: "test",
+          name: "配置测试",
+          component: () => import("../page/service-go/config/test_page.vue"),
+        },
+      ],
+    },
   ],
 });
